@@ -1,0 +1,46 @@
+div.notifications {
+    padding: 15px;
+    h1 {
+        font-size: 18px;
+        margin: 0px 0px 15px 0px;
+    }
+    table {
+        width: 100%;
+        margin-top: 20px;
+        .check {
+            vertical-align: middle;
+            .fa {
+                font-size: 25px;
+                line-height: 40px;
+                cursor: pointer;
+            }
+        }
+        img {
+            width: 25px;
+            cursor: pointer;
+        }
+        tr:nth-child(odd) {
+            background: #fff;
+        }
+        th {
+            background: #000;
+            color: #fff;
+            vertical-align: middle;
+            font-size: 14px;
+            font-weight: normal;
+            padding: 10px 15px;
+        }
+        td {
+            font-size: 13px;
+            padding: 10px 15px;
+            white-space: normal !important;
+            word-break: break-word;
+        }
+        // tr th:first-child,tr th:last-child,
+        // tr td:first-child, tr td:last-child{
+        //     text-align: center;
+        //     width:60px;
+        //     vertical-align: middle;
+        // }
+    }
+}

@@ -1,0 +1,364 @@
+.userDetail {
+    h1 {
+        font-size: 17px;
+        color: #4b5256;
+        margin: 10px 0px;
+        @media only screen and (max-width: 990px) {
+            padding:20px 0px;
+        }
+    }
+    .user-cntnr {
+        float: left;
+        width: 100%;
+        h3 {
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            padding: 8px 15px;
+            margin: 0px;
+            float: left;
+            width: 100%;
+        }
+        .info-box {
+            width: 100%;
+            float: left;
+            background: #fff;
+            padding: 15px;
+            img {
+                width: 100px;
+                margin: auto;
+                display: block;
+                margin-bottom: 5px;
+            }
+            p {
+                text-align: center;
+                display: block;
+                font-weight: bold;
+                color: #4b5256;
+                font-size: 16px;
+                margin: 5px 0px;
+            }
+            ul {
+                margin: 0px;
+                padding: 0px;
+                width: 100%;
+                text-align: center;
+            }
+            ul li {
+                list-style: none;
+                display: inline-block;
+                font-size: 13px;
+                padding: 0px 7px;
+                color: #8f8f8f;
+                @media(max-width: 576px) {
+                    display:block;
+                }
+            }
+            li+li {
+                border-left: solid 2px #ccc;
+                @media(max-width: 576px) {
+                    border-left: solid 0px #ccc;
+                }
+            }
+            .service-info {
+                background: #3c8cbc;
+                font-size: 12px;
+                display: inline-block;
+                color: #fff;
+                border-right: solid 2px #fff;
+                padding: 4px 0px;
+                text-align: center;
+                margin-top: 8px;
+                line-height: 16px;
+                span {
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    display: block;
+                    font-size: 18px;
+                }
+            }
+            .chatbutton{
+                margin-top:15px;
+                .btn.btn-primary{
+                    display:block;
+                    width:100%;
+                    background: #3c8cbc;
+                }
+            }
+        }
+    }
+    .pay-history {
+        @media only screen and (max-width: 500px) {
+            float:left;
+            width: 100%;
+            margin-top: 30px;
+        }
+        h3 {
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            padding: 8px 15px;
+            margin: 0px;
+            float: left;
+            width: 100%;
+        }
+        .info-box {
+            width: 100%;
+            float: left;
+            background: #fff;
+            overflow-y: auto;
+            min-height: 277px;
+            max-height: 277px;
+            .clearfix {
+                padding: 5px 0px;
+                border-bottom: solid 1px #ccc;
+            }
+            .inr-info:last-child {
+                border: 0px;
+            }
+            .inr-info {
+                width: 100%;
+                float: left;
+                padding: 5px 15px;
+            }
+            .image {
+                width: 50px; // float: left;
+                margin-top: 6px;
+                display: table-cell;
+                vertical-align: middle; // min-height:100%;
+            }
+            ul {
+                // display: block;
+                display: table-cell;
+                list-style: none;
+                line-height: 22px;
+                padding-left: 10px;
+                margin: 0px 0px 0px 0px;
+                li {
+                    color: #c0c0c0;
+                    font-size: 13px;
+                }
+                li:first-child {
+                    color: #4b5256;
+                }
+                li:nth-last-child(2) {
+                    padding-top: 5px;
+                }
+                li:last-child {
+                    margin-top: -10px;
+                }
+                .fa {
+                    color: #feeb71;
+                }
+            }
+            @media(max-width:576px) {
+                .image {
+                    height: 95px;
+                }
+                .pull-right {
+                    float: none !important;
+                    display: block;
+                    margin-top: 2px;
+                }
+            }
+        }
+    }
+    .pay-option {
+        width: 100%;
+        margin-top: 30px;
+        float: left;
+        .form-info {
+            width: 100%;
+            float: left;
+            background: #fff;
+            padding: 10px 20px;
+            button.stripePay {
+                background: #3c8cbc;
+                color: #fff;
+                border: 0px;
+                padding: 5px 50px;
+                border-radius: 4px;
+                float: right;
+                margin: 10px 0px 10px 0px;
+            }
+            #paypal-button {
+                margin-top: 20px;
+            }
+            #payumoney-button {
+                max-width: 90px;
+                margin: 20px 0px;
+                cursor: pointer;
+            }
+            @media screen and (max-width:420px) {
+                button.stripePay {
+                    float: none;
+                    margin: 20px auto 0px auto;
+                    width: 150px;
+                    display: block;
+                }
+                #paypal-button {
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 150px;
+                }
+                #payumoney-button {
+                    margin-left: auto;
+                    margin-right: auto;
+                    max-width: 150px;
+                    text-align: center;
+                    background: #84b211;
+                    border-radius: 50px;
+                    img {
+                        max-width: 90px;
+                    }
+                }
+            }
+        }
+        .has-error {
+            label {
+                color: #a94442;
+            }
+        }
+        h3 {
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            padding: 8px 15px;
+            margin: 0px;
+            float: left;
+            width: 100%;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .br {
+            margin: 0 !important;
+        }
+        textarea {
+            resize: none;
+        }
+    }
+    .gallery {
+        float: left;
+        width: 100%;
+        margin-top: 30px;
+        h3 {
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            padding: 8px 15px;
+            margin: 0px;
+            float: left;
+            width: 100%;
+        }
+        .form-info {
+            width: 100%;
+            height: 260px;
+            overflow-y: auto;
+            background: #fff;
+            padding: 10px 0px 10px 0px;
+            div {
+                margin: 10px 15px;
+                text-align: center;
+                height: 50px;
+            }
+        }
+    }
+}
+
+.paypalform {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 500000000;
+    background: rgba(0, 0, 0, 0.4);
+    form {
+        background: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 0px 2px #3c8cbc;
+        padding: 10px 15px;
+        h4 {
+            background: #3c8cbc;
+            color: #fff;
+            font-size: 13px;
+            margin: -10px -15px 15px -15px;
+            padding: 10px 15px;
+            .fa {
+                cursor: pointer;
+            }
+        }
+        input {
+            background: #fff;
+            color: #444;
+            margin-bottom: 15px;
+        }
+        .field {
+            margin: 10px 0px;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            line-height: 1.42857143;
+            border-radius: 4px;
+            input {
+                line-height: 1.42857143;
+            }
+        }
+    }
+}
+
+.slider {
+    max-width: 90%;
+    height: 400px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border: solid 1px #ccc;
+    box-shadow: -1px 0px 4px #ccc;
+    z-index: 1;
+    @media only screen and (max-width: 500px) {
+        width:90%;
+        max-width: 90%;
+    }
+    div {
+        height: 400px;
+    }
+    span {
+        position: absolute;
+        cursor: pointer;
+        background: #fff;
+        border-radius: 50px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        right: 5px;
+        top: 5px;
+        display: inline-block;
+        color: #000;
+        font-weight: bold;
+        z-index: 99999;
+        vertical-align: middle;
+        p {
+            margin-top: 5px;
+            vertical-align: middle;
+            background: none;
+        }
+    }
+}
+
+.transparent-block {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 30000;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+

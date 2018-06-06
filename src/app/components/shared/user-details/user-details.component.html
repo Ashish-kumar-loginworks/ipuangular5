@@ -1,0 +1,151 @@
+<div class="col-md-12 userDetail">
+  <div class="col-md-12">
+    <h1>Details</h1>
+  </div>
+  <article>
+    <div class="col-md-5">
+      <div class=" user-cntnr">
+        <h3>User</h3>
+        <div class="info-box text-center" *ngIf="user?.image">
+          <cl-image class="image" [public-id]="user.image" height="80px" width="80px">
+            <cl-transformation radius="max" crop="crop">
+            </cl-transformation>
+          </cl-image>
+          <p>{{user.name}} {{user.lastname}}</p>
+          <ul>
+            <li>{{user?.providing?.profession}}</li>
+            <li>{{user?.email}}</li>
+            <li>{{user?.phone}}</li>
+          </ul>
+          <div class="service-info col-md-4 col-sm-12 col-xs-12"><span>{{user?.stats?.payments}}</span> Services</div>
+          <div class="service-info col-md-4 col-sm-12 col-xs-12"><span>{{user?.stats?.reviews}}</span> Reviews</div>
+          <div class="service-info col-md-4 col-sm-12 col-xs-12"><span>{{user?.stats?.avg_score}}</span> Avg.score</div>
+          <div class="clearfix"></div>
+          <div class="chatbutton"> 
+            <button class="btn btn-primary" (click)="startChatWithProvider($event)"> <i class="fa fa-commenting-o" aria-hidden="true"></i> Start Chat with <b>{{user.name}} {{user.lastname}}</b></button>
+          </div>
+        </div>
+
+        <div class="pay-option">
+          <h3>Pay Option</h3>
+          <form class="form-horizontal" [formGroup]="form" (ngSubmit)="onFormSubmit()">
+            <div class="form-info">
+              <div class="form-group" [ngClass]="{'has-error': form.controls['amount'].touched && form.controls['amount']?.errors?.required}">
+                <label for="email" class="col-sm-3">Amount:</label>
+                <div class="col-sm-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-inr"></i></span>
+                    <input type="number" class="form-control" name="amount" formControlName="amount" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-sm-3">Rate:</label>
+                <div class="col-sm-9">
+                  <div class="">
+                    <bar-rating [(rate)]="rating" [max]="5"></bar-rating>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-sm-3">Title:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" class="form-control" name="title" formControlName="title" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-sm-3">Review:</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" name="review" formControlName="review"></textarea>
+                </div>
+              </div>
+              <button type="submit" class="stripePay">Pay</button>
+              <div id="paypal-button"></div>
+              <div id="clearfix"></div>
+              <div id="payumoney-button">
+                <img src="../../assets/img/payumoney.png" alt="" (click)="payUmoneyPayment()" />
+                <!--<img src="../../assets/img/payumoney.png" alt="" (click)="payUmoneyPaymentFormShow()" />-->
+              </div>
+              <div id="clearfix"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-7">
+      <div class="pay-history">
+        <h3>Pay History</h3>
+        <div class="info-box">
+          <div class="inr-info">
+            <div *ngIf="user?.pay_received">
+              <div *ngFor="let pay of user?.pay_received" class="clearfix">
+                <div class="image" *ngIf="pay?.source_img">
+                  <cl-image *ngIf="pay?.source_img" [public-id]="pay.source_img" height="40" width="40" background="#ffffff" class="profile">
+                    <cl-transformation radius="max" crop="crop" background="#ffffff">
+                    </cl-transformation>
+                  </cl-image>
+                </div>
+                <ul>
+                  <li>({{pay.timestamp_str}}) &#x2013; {{pay.title}}</li>
+                  <li>${{pay.amount}} [{{pay.source_str}}]</li>
+                  <li><span><bar-rating [(rate)]="pay.rate" [max]="5" readOnly="true" disabled="true"></bar-rating></span></li>
+                  <li>{{pay.review}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery">
+        <h3>Gallery</h3>
+        <div class="form-info" *ngIf="user?.gallery">
+          <div class="col-md-2 col-sm-3 col-xs-4" *ngFor="let image of user.gallery">
+            <cl-image *ngIf="image" [public-id]="image" width='100%' (click)="imageLarge = image; showImagePlaceholder = true">
+            </cl-image>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <div class="clearfix"><br/></div>
+  <div class="clearfix"><br/></div>
+
+  <div class="paypalform" [hidden]="!showPayForm">
+    <form novalidate (ngSubmit)="payment()" [formGroup]="stripeTest">
+      <h4>Pay through Stripe <i class="fa fa-close pull-right" (click)="showPayForm = false"></i></h4>
+      <input type="text" formControlName="name" placeholder="Jane Doe">
+      <div id="card-element" class="field" #card hidePostalCode="true"></div>
+      <button type="submit" class="button-popup">BUY</button>
+    </form>
+  </div>
+
+</div>
+
+<div *ngIf="showImagePlaceholder" class="transparent-block">
+  <div class="slider">
+    <span (click)="showImagePlaceholder = false"><p>X</p></span>
+    <div class="slide">
+      <cl-image [public-id]="imageLarge" height="100%"></cl-image>
+    </div>
+  </div>
+</div>
+
+<div class="payumoneyForm" [hidden]="!payUmoneyPaymentFormShown">
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<app-chat [user]="loggedInuser" (toggleChat)="startChatWithProvider($event)" [providerChat]="user" [hidePanel]="hideChatPanel"></app-chat>

@@ -1,0 +1,251 @@
+<div class="signupContainer">
+  <div class="signupform">
+    <div class="col-1">
+      <img src="./assets/img/background1.png" alt="">
+    </div>
+    <div class="col-2">
+      <div [hidden]="provider">
+        <form [formGroup]="form" (ngSubmit)="onSignUpFormSubmit()">
+          <img src="./assets/img/ipu-icon.png" alt="">
+          <h3>Create an Account</h3>
+          <div class="form-group" [ngClass]="{'has-danger': form.controls['username']?.errors?.required && form.controls['username'].touched}">
+            <div class="error-msg" *ngIf="form.controls['username']?.errors && form.controls['username'].touched">
+              <span>{{form.controls['username'].errors.required ? 'Please enter a valid username.' : ''}}</span>
+              <span>{{form.controls['username'].errors.minlength ? 'Username must have atleast 3 characters.' : ''}}</span>
+            </div>
+            <input type="text" name="username" formControlName="username" placeholder="Choose a Username" minlength="3" maxlength="100"
+            />
+          </div>
+          <div class="form-group" [ngClass]="{'has-danger': (form.controls['email']?.errors?.required || form.controls['email']?.errors?.email) && form.controls['email'].touched}">
+            <div class="error-msg" *ngIf="(form.controls['email']?.errors || form.controls['email']?.errors?.email) && form.controls['email'].touched">
+              <span>{{form.controls['email']?.errors?.required ? 'Please enter your email id.' : ''}}</span>
+              <span>{{form.controls['email']?.errors?.email ? 'Please enter a valid email id.' : ''}}</span>
+            </div>
+            <input type="email" name="email" formControlName="email" placeholder="Email Id" />
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{'has-danger': form.controls['firstname']?.errors?.required && form.controls['firstname'].touched}">
+                <div class="error-msg" *ngIf="form.controls['firstname']?.errors && form.controls['firstname'].touched">
+                  <span>{{form.controls['firstname']?.errors?.required ? 'First name is required.' : ''}}</span>
+                  <span>{{form.controls['firstname']?.errors?.minlength ? 'First name must have atleast 3 character.' : ''}}</span>
+                </div>
+                <input type="text" placeholder="First name" name="firstname" formControlName="firstname" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{'has-danger': form.controls['lastname']?.errors?.required && form.controls['lastname'].touched}">
+                <div class="error-msg" *ngIf="form.controls['lastname']?.errors && form.controls['lastname'].touched">
+                  <span>{{form.controls['lastname']?.errors?.required ? 'Last name is required.' : ''}}</span>
+                  <span>{{form.controls['lastname']?.errors?.minlength ? 'Last name must have atleast 3 character.' : ''}}</span>
+                </div>
+                <input type="text" placeholder="Last name" name="lastname" formControlName="lastname" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{'has-danger': form.controls['password']?.errors?.required && form.controls['password'].touched}">
+                <div class="error-msg" *ngIf="form.controls['password']?.errors && form.controls['password'].touched">
+                  <span>{{form.controls['password']?.errors?.required ? 'Please enter your password.' : ''}}</span>
+                  <span>{{form.controls['password']?.errors?.minlength ? 'Password must be atleast 6 characters.' : ''}}</span>
+                  <span>{{form.controls['password']?.errors?.pattern ? 'Password must be atleast 6 characters longer. It must contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number and 1 special character.' : ''}}</span>
+                </div>
+                <input type="password" placeholder="Enter Password" name="password" formControlName="password" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{'has-danger': form.controls['conformPassword']?.errors?.required && form.controls['conformPassword'].touched}">
+                <div class="error-msg" *ngIf="(form.controls['conformPassword']?.errors && form.controls['conformPassword'].touched)">
+                  <span>{{form.controls['conformPassword']?.errors?.required ? 'Please confirm your password' : ''}}</span>
+                </div>
+                <div class="error-msg" *ngIf="form.controls['conformPassword'].dirty && form.controls['password'].value != form.controls['conformPassword'].value">
+                  <span>{{form.controls['password'].value != form.controls['conformPassword'].value ? 'Both Passwords must be same.' : ''}}</span>
+                </div>
+                <input type="password" placeholder="Confirm Password" name="conformPassword" formControlName="conformPassword" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group" [ngClass]="{'has-danger': form.controls['phone']?.errors?.required && form.controls['phone'].touched}">
+            <div class="error-msg" *ngIf="form.controls['phone']?.errors?.required && form.controls['phone'].touched">
+              <span></span> {{form.controls['phone']?.errors?.required ? 'Please enter your phone number.' : ''}}
+            </div>
+            <div class="error-msg" *ngIf="form.controls['phone']?.errors?.pattern && form.controls['phone'].touched">
+              <span></span> {{form.controls['phone']?.errors?.pattern ? 'Please enter valid phone number.' : ''}}
+            </div>
+            <input type="number" placeholder="Phone no." name="phone" formControlName="phone" />
+          </div>
+          <div class="form-group" [ngClass]="{'has-danger': form.controls['agree']?.errors?.required && form.controls['agree'].errors}">
+            <label class="control-label">
+                <input type="checkbox" name="agree" formControlName="agree" />
+                  I have read and agree to the terms of service.
+                </label>
+            <input type="hidden" name="referral" formControlName="referral">
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="form.controls['agree'].value == false">Create a account</button>
+          <p class="text-right login" (click)="loginPageNavigate()">Login</p>
+        </form>
+      </div>
+      <div [hidden]="!provider">
+        <form [formGroup]="formprovider" (ngSubmit)="onSignUpProviderFormSubmit()">
+          <img src="./assets/img/ipu-icon.png" alt="" [ngStyle]="{'margin-top': showServiceDetailsForm ? '0px': '25px'}" />
+          <h3>Create an Account</h3>
+          <div class="userServicesinfo" [hidden]="showServiceDetailsForm">
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['username']?.errors?.required && formprovider.controls['username'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['username']?.errors && formprovider.controls['username'].touched">
+                <span>{{formprovider.controls['username'].errors.required ? 'Please enter a valid username.' : ''}}</span>
+                <span>{{formprovider.controls['username'].errors.minlength ? 'Username must have atleast 3 characters.' : ''}}</span>
+              </div>
+              <input type="text" placeholder="Choose a Username" name="username" formControlName="username" />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['email']?.errors?.required && formprovider.controls['email'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['email']?.errors && formprovider.controls['email'].touched">
+                <span>{{formprovider.controls['email']?.errors?.required ? 'Please enter your email id.' : ''}}</span>
+                <span>{{formprovider.controls['email']?.errors?.email ? 'Please enter a valid email id.' : ''}}</span>
+              </div>
+              <input type="email" placeholder="Email Id" name="email" formControlName="email" />
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['firstname']?.errors?.required && formprovider.controls['firstname'].touched}">
+                  <div class="error-msg" *ngIf="formprovider.controls['firstname']?.errors && formprovider.controls['firstname'].touched">
+                    <span>{{formprovider.controls['firstname']?.errors?.required ? 'First name is required.' : ''}}</span>
+                    <span>{{formprovider.controls['firstname']?.errors?.minlength ? 'First name must have atleast 3 character.' : ''}}</span>
+                  </div>
+                  <input type="text" placeholder="First name" name="firstname" formControlName="firstname" />
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['lastname']?.errors?.required && formprovider.controls['lastname'].touched}">
+                  <div class="error-msg" *ngIf="formprovider.controls['lastname']?.errors && formprovider.controls['lastname'].touched">
+                    <span>{{formprovider.controls['lastname']?.errors?.required ? 'Last name is required.' : ''}}</span>
+                    <span>{{formprovider.controls['lastname']?.errors?.minlength ? 'Last name must have atleast 3 character.' : ''}}</span>
+                  </div>
+                  <input type="text" placeholder="Last name" name="lastname" formControlName="lastname" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['password']?.errors?.required && formprovider.controls['password'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['password']?.errors && formprovider.controls['password'].touched">
+                <span>{{formprovider.controls['password']?.errors?.required ? 'Please enter your password.' : ''}}</span>
+                <span>{{formprovider.controls['password']?.errors?.pattern ? 'Password must be atleast 6 characters longer. It must contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number and 1 special character.' : ''}}</span>
+              </div>
+              <input type="password" placeholder="Enter a password" name="password" formControlName="password" />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['conformPassword']?.errors?.required && formprovider.controls['conformPassword'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['conformPassword']?.errors && formprovider.controls['conformPassword'].touched">
+                <span>{{formprovider.controls['conformPassword']?.errors?.required ? 'Please confirm your password.' : ''}}</span>
+              </div>
+              <div class="error-msg" *ngIf="formprovider.controls['conformPassword']?.dirty && formprovider.controls['password'].value != formprovider.controls['conformPassword'].value">
+                <span>{{formprovider.controls['password'].value != formprovider.controls['conformPassword'].value ? 'Both Passwords must be same.' : ''}}</span>
+              </div>
+              <input type="password" placeholder="Confirm password" name="conformPassword" formControlName="conformPassword" />
+            </div>
+            <div class="form-group">
+              <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['aggree']?.errors?.required && formprovider.controls['aggree'].touched}">
+                <label class="control-label">
+                    <input type="checkbox" name="agree" formControlName="agree" />
+                    I have read and agree to the terms of service.
+                </label>
+                <input type="hidden" name="referral" formControlName="referral">
+              </div>
+              <button type="button" class="btn btn-info" (click)="getServiceDetails()" [disabled]="formprovider.controls['username'].value == '' || formprovider.controls['firstname'].value == '' || formprovider.controls['lastname'].value == '' || formprovider.controls['password'].value == '' || formprovider.controls['agree'].value == false || formprovider.controls['password'].value != formprovider.controls['conformPassword'].value">Next</button>
+              <p class="text-right login" (click)="loginPageNavigate()">Login</p>
+            </div>
+          </div>
+          <div class="userServicesinfo" [hidden]="!showServiceDetailsForm">
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['profession']?.errors?.required && formprovider.controls['profession'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['profession']?.errors && formprovider.controls['profession'].touched">
+                <span>{{formprovider.controls['profession']?.errors?.required ? 'Please enter your profession.' : ''}}</span>
+                <span>{{formprovider.controls['profession']?.errors?.minlength ? 'Profession must be atleast 3 characters long.' : ''}}</span>
+              </div>
+              <ng-select [multiple]="true" [items]="categories" (data)="refreshCategory($event)" (selected)="selectedCategory($event)"
+                (removed)="removedCategory($event)" placeholder="No Profession selected"></ng-select>
+              <input type="hidden" class="form-control" name="profession" formControlName="profession" />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['category']?.errors?.required && formprovider.controls['category'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['category']?.errors && formprovider.controls['category'].touched">
+                <span>{{formprovider.controls['category']?.errors?.required ? 'Please enter your profession category.' : ''}}</span>
+                <span>{{formprovider.controls['category']?.errors?.minlength ? 'Profession category must be atleast 3 characters long.' : ''}}</span>
+              </div>
+              <ng-select [multiple]="true" [items]="subCategories" (data)="refreshSubCategory($event)" (selected)="selectedSubCategory($event)"
+                (removed)="removedSubCategory($event)" placeholder="No Category selected"></ng-select>
+              <input type="hidden" class="form-control" name="category" formControlName="category" />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['phone']?.errors?.required && formprovider.controls['phone'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['phone']?.errors?.pattern && formprovider.controls['phone'].touched">
+                <span></span> {{formprovider.controls['phone']?.errors?.pattern ? 'Please enter valid phone number.' : ''}}
+              </div>
+              <input type="number" placeholder="Phone no." name="phone" formControlName="phone" />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['website']?.errors?.pattern && formprovider.controls['website'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['website']?.errors?.pattern && formprovider.controls['website'].touched">
+                {{formprovider.controls['website']?.errors?.pattern ? 'Please enter your website.' : ''}}
+              </div>
+              <input type="text" placeholder="Website" name="website" formControlName="website" />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['address']?.errors?.required && formprovider.controls['address'].touched}">
+              <div class="error-msg" *ngIf="formprovider.controls['address']?.errors?.required && formprovider.controls['address'].touched">
+                {{(formprovider.controls['address']?.errors?.required && formprovider.controls['address'].touched) ? 'Please enter your address.'
+                : ''}}
+              </div>
+              <input type="text" placeholder="Address" name="address" formControlName="address" autocorrect="off" autocapitalize="off"
+                spellcheck="off" class="form-control" #search />
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': formprovider.controls['aggree1']?.errors?.required && formprovider.controls['aggree1'].touched}">
+              <label class="control-label">
+                  <input type="checkbox" name="agree1" formControlName="agree1" />
+                  I have read and agree to the terms of service.
+              </label>
+            </div>
+            <button type="submit" class="btn btn-info" [disabled]="formprovider.controls['agree1'].value == false">Submit</button>
+            <p class="text-right login"><a [routerLink]="['/login']">Login</a></p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="otpmodal" *ngIf="otpFormShow">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="otpForm">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal">Enter OTP<button type="button" class="close" (click)="otpFormShow = !otpFormShow"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="otp" class="control-label">Please Enter OTP recieved on your mobile number.</label>
+              <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" minlength="6" maxlength="6" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onOTPFormSubmit()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="otpmodal" *ngIf="otpFormShow1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="otpForm1">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal">Enter OTP<button type="button" class="close" (click)="otpFormShow1 = !otpFormShow1"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="otp" class="control-label">Please Enter OTP recieved on your mobile number.</label>
+              <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" minlength="6" maxlength="6" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onOTPProviderFormSubmit()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

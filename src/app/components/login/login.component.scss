@@ -1,0 +1,248 @@
+@import "../../../assets/scss/_mixins";
+div.logincontainer {
+    background: #eee;
+    background: url("../../../assets/img/background.jpg") no-repeat fixed;
+    min-height: 100vh;
+    min-width: 100%;
+    display: table;
+    @media screen and (max-width: 576px) {
+        // background: #41effa;
+        background-repeat: repeat-y;
+        height: 100vh;
+        width: 100vw;
+    }
+    div.loginform {
+        height: 500px;
+        max-width: 730px;
+        background: rgba(240, 240, 240, 0.5);
+        padding: 0px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        @include translate-xy(-50%,
+        -50%);
+        overflow: hidden;
+        clear: both;
+        display: table;
+        @media screen and (max-width: 720px) {
+            background: rgba(240, 240, 240, 0.1);
+            width: 100%;
+            height: 100%;
+        }
+    }
+    div.col-1 {
+        background: #ccc;
+        display: table-cell;
+        width: 50%;
+        vertical-align: top;
+        @media screen and (max-width: 720px) {
+            display:none;
+        }
+    }
+    div.col-2 {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
+        padding: 35px 42px 35px 42px;
+        @media screen and (max-width: 576px) {
+            background: transparent;
+            width: 100%;
+            padding: 25px;
+            max-width: 100%;
+        }
+        form {
+            width: 100%;
+            font-size: 13px;
+            img {
+                width: 80px; // height: 40px;
+                display: block;
+            }
+            .btn-info {
+                background-color: #1da0f2
+            }
+            h3 {
+                font-size: 18px;
+                font-weight: 600;
+                color: #333;
+                text-transform: uppercase!important;
+            }
+            label {
+                color: #495057;
+                font-weight: 500;
+            }
+            .forgot {
+                color: #ff0000;
+                cursor: pointer;
+                text-decoration: underline; // border-bottom: 1px solid #ff0000;
+            }
+            .forgotPassword {
+                color: #ff0000;
+                text-align: right;
+                display: block;
+                cursor: pointer;
+                text-decoration: underline; // border-bottom: 1px solid #ff0000;
+            }
+            .signup a {
+                text-decoration: none;
+                color: #555;
+            }
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            input[type="password"] {
+                width: 100%;
+                height: 40px;
+                margin: 10px 0px;
+                border: none;
+                outline: none;
+                border-bottom: 1px solid #ccc;
+                color: #495057;
+                padding-left: 10px;
+            }
+            input[type="checkbox"] {
+                width: 15px;
+                height: 15px;
+                vertical-align: -4px;
+            }
+            button {
+                width: 100%;
+                display: block;
+                font-size: 14px;
+                margin: 10px 0px 0px 0px;
+            }
+            .btn-info {
+                background-color: #1da0f2
+            }
+            .btn-danger {
+                background-color: #df493a;
+            }
+            p {
+                display: block;
+                margin: 15px 0px;
+            }
+            .has-danger input {
+                background-color: #ec5f5f;
+                border-bottom-color: #ff0000;
+            }
+            .has-danger input::-webkit-input-placeholder {
+                color: #444;
+            }
+            .btn-toolbar {
+                padding: 0px;
+                margin: 0px;
+                .btn {
+                    display: table-cell;
+                    width: 100%;
+                    font-size: 14px;
+                }
+                .btn-success {
+                    background: #16539f;
+                    border-color: #16539f;
+                    color: #fff;
+                }
+                .btn-success:hover {
+                    background: #4478b9;
+                    border-color: #16539f;
+                    color: #fff;
+                }
+                .btn+.btn {
+                    margin-left: 2%;
+                }
+                @media screen and (max-width: 576px) {
+                    .btn {
+                        width: 100%;
+                    }
+                    .btn+.btn {
+                        margin-left: 0%;
+                    }
+                }
+            }
+        }
+        .forgotPassword {
+            background: transparent;
+            height: 100%;
+            position: relative;
+            form {
+                position: absolute;
+                transform: translate(-50%, -50%);
+                top: 50%;
+                left: 50%;
+                .has-danger input {
+                    background-color: #ec5f5f;
+                    border-bottom-color: #ff0000;
+                }
+                .has-danger input::-webkit-input-placeholder {
+                    color: #444;
+                }
+                .form-group{
+                    margin-bottom:0px;
+                    position: relative;
+                }
+            }
+            .error-msg {
+                color: #eeeeee;
+                background: #f44336;
+                border: 2px solid #ff0000;
+                width: auto;
+                padding: 10px;
+                position: absolute;
+                top: 80%;
+                right: 0%;
+                border-radius: 6px;
+                z-index: 99999999999;
+                span {
+                    display: block;
+                    &+span {
+                        margin-top: 4px;
+                    }
+                }
+            }
+            .error-msg::after {
+                content: "";
+                position: absolute;
+                bottom: 100%;
+                left: 70%;
+                border-style: solid;
+                border-color: transparent transparent #ff0000 transparent;
+                border-width: 10px;
+            }
+        }
+    }
+    .otpmodal {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .modal-dialog {
+            top: 30% !important;
+            transform: translate(0, -50%) !important;
+            .modal-title {
+                text-align: center;
+                font-weight: 600;
+                font-size: 18px;
+                color: #5bc0de;
+            }
+            form {
+                margin: 0px;
+            }
+            .form-group {
+                margin-bottom: 0px;
+                .control-label {
+                    margin-bottom: 15px;
+                }
+                .form-control {
+                    padding: 10px 20px;
+                    height: 40px;
+                }
+            }
+            .modal-footer {
+                text-align: center;
+            }
+        }
+    }
+}

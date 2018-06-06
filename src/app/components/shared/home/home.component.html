@@ -1,0 +1,86 @@
+<div class="greyRightCntnt">
+  <h1>Dashboard</h1>
+  <div class="row">
+      <div class="col-md-3 ">
+          <div class="payment-box">
+              <div class="visa red-bg"><img src="../../../../assets/img/visa.png" alt="visa" /></div>
+              <div class="white-div">
+                  <b class="red">{{payments}}</b>
+                  <span>PAYMENT</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="payment-box">
+              <div class="blue-bg visa"><img src="../../../../assets/img/master-card.png" alt="visa" /></div>
+              <div class="white-div">
+                  <b class="blue">{{pay_views}}</b>
+                  <span>PAY VIEWS</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-3" *ngIf="false">
+          <div class="payment-box">
+              <div class="yellow-bg visa"><img src="../../../../assets/img/avtar.png" alt="visa" /></div>
+              <div class="white-div">
+                  <span>USERS</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-3" *ngIf="false">
+          <div class="payment-box">
+              <div class="green-bg visa"><img src="../../../../assets/img/user-views.png" alt="visa" /></div>
+              <div class="white-div"><span>USERS VIEWS</span></div>
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="payment-box">
+              <div class="lite-green-bg visa"><img src="../../../../assets/img/refferal.png" alt="visa" /></div>
+              <div class="white-div">
+                  <b class="lite-green">{{referrals}}</b>
+                  <span *ngIf="isProvider">REFERRAL</span>
+                  <span *ngIf="!isProvider">REF. USERS</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="payment-box">
+              <div class="purple-bg visa"><img src="../../../../assets/img/refferal.png" alt="visa" /></div>
+              <div class="white-div">
+                  <b class="purple">{{referral_views}}</b>
+                  <span *ngIf="isProvider">REFERRAL VIEWS</span>
+                  <span *ngIf="!isProvider">REF. USERS VIEWS</span>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div [ngClass]="{'col-md-12': !isProvider, 'col-md-9': isProvider}">
+          <div class="ipu-chart">
+              <h4>References</h4>
+               <div class="chart">
+                  <!-- <ngx-charts-area-chart-stacked [results]="data" [curve]="curve" [yAxis]="true" [xAxis]="true" [xAxisLabel]="''" [yAxisLabel]="''"
+                      [showGridLines]="false" [tooltipDisabled]="false" [legend]="true" [scheme]="colorScheme" [schemeType]="schemeType"
+                      [roundDomains]="false" [timeline]="false" [gradient]="gradient" [legendTitle]="''">
+                  </ngx-charts-area-chart-stacked> -->
+              </div> 
+          </div>
+      </div>
+      <div class="col-md-3" *ngIf="isProvider">
+          <div class="rating-cntnr">
+              <h4>Average Rating</h4>
+               <!--<canvas baseChart [data]="ratingsData.data" [labels]="ratingsData.labels" [chartType]="ratingsData.type" [legend]="ratingsData.legend"
+                  [colors]="ratingsData.colors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas> -->
+              <ul class="labels">
+                  <li *ngIf="ratingsData.labels.toString().indexOf('Very Good') > -1"><span></span> Very Good</li>
+                  <li *ngIf="ratingsData.labels.toString().indexOf('Good') > -1"><span></span> Good</li>
+                  <li *ngIf="ratingsData.labels.toString().indexOf('Satisfactory') > -1"><span></span> Satisfactory</li>
+                  <li *ngIf="ratingsData.labels.toString().indexOf('Pass') > -1"><span></span> Pass</li>
+                  <li *ngIf="ratingsData.labels.toString().indexOf('Critical') > -1"><span></span> Critical</li>
+              </ul>
+          </div>
+      </div>
+  </div>
+</div>
+<app-chat [user]="user"></app-chat>
+

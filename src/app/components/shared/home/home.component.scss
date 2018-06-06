@@ -1,0 +1,182 @@
+.greyRightCntnt {
+    background: #edf0f5;
+    padding: 15px 30px;
+    h1 {
+        font-size: 18px;
+        margin: 15px 0px;
+        color: #000;
+    }
+    .payment-box {
+        margin-bottom: 15px;
+        float: left;
+        width: 100%;
+        .visa {
+            height: 70px;
+            width: 40%;
+            float: left;
+            position: relative;
+            img {
+                width: 40px;
+                position: absolute;
+                transform: translate(-50%, -50%);
+                top: 50%;
+                left: 50%;
+            }
+        }
+        .white-div {
+            background: #fff;
+            width: 60%;
+            float: left;
+            padding: 15px;
+            text-align: center;
+            height: 69px;
+            position: relative;
+            box-shadow: 1px 1px #ccc;
+            b {
+                display: block;
+                font-weight: 600;
+                // color: #f5a32c;
+                font-size: 125%;
+            }
+            span {
+                // transform: translate(-50%, 0%);
+                // left: 50%;
+                // top: 50%;
+                // position: absolute;
+                // display: inline-table;
+                display: block;
+                font-size:13px;
+                white-space:pre;
+            }
+            /*span::before {
+                position: absolute;
+                content: "";
+                border-top: solid 1px #f5a32c;
+                width: 30px;
+                left: 30%;
+                top: -5px;
+            }*/
+        }
+        .red {
+            color: #dc4b38;
+        }
+        .blue {
+            color: #2dc0ef;
+        }
+        .yellow {
+            color: #f39c10;
+        }
+        .green {
+            color: #30a55a;
+        }
+        .lite-green {
+            color: #9fc800;
+        }
+        .purple {
+            color: #1264b9;
+        }
+        .red-bg {
+            background: #dc4b38;
+        }
+        .blue-bg {
+            background: #2dc0ef;
+        }
+        .yellow-bg {
+            background: #f39c10;
+        }
+        .green-bg {
+            background: #30a55a;
+        }
+        .lite-green-bg {
+            background: #9fc800;
+            img {
+                padding: 8px;
+            }
+        }
+        .purple-bg {
+            background: #1264b9;
+            img {
+                padding: 8px;
+            }
+        }
+    }
+    .rating-cntnr {
+        background: #fff;
+        padding: 15px 0px;
+        margin-top: 15px;
+        height: 370px;
+        h4 {
+            font-size: 15px;
+            text-align: left;
+            font-weight: 600;
+            margin: 10px 0px 15px 0px;
+            padding: 0px 20px 10px 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0px 10px 20px;
+            font-size: 12px;
+            line-height: 20px;
+            color: #aaa;
+            li {
+                float: left;
+                width: 50%;
+                margin-bottom: 10px;
+                span {
+                    vertical-align: middle;
+                    background: transparent;
+                    width: 15px;
+                    height: 15px;
+                    margin-right: 7px;
+                    display: inline-block;
+                    content: "";
+                }
+            }
+            li:nth-child(1) span {
+                background: #008001;
+            }
+            li:nth-child(2) span {
+                background: #aafe34;
+            }
+            li:nth-child(3) span {
+                background: #ffff01;
+            }
+            li:nth-child(4) span {
+                background: #fea501;
+            }
+            li:nth-child(5) span {
+                background: #fe0000;
+            }
+        }
+    }
+    .ipu-chart {
+        width: 100%;
+        background: #fff;
+        margin-top: 15px;
+        padding: 15px 0px;
+        div.chart {
+            min-height: 300px;
+        }
+        h4 {
+            font-size: 15px;
+            text-align: left;
+            font-weight: 600;
+            margin: 10px 0px 10px 0px;
+            padding: 0px 20px 10px 20px;
+            border-bottom: 1px solid #ccc;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .row {
+        margin: 0px;
+        padding-right: 0px;
+    }
+    .left-nav {
+        position: absolute;
+        width: 250px;
+        z-index: 1;
+    }
+}

@@ -1,0 +1,36 @@
+<div class="manage-gallery">
+  <h1>Manage Gallery <a [routerLink]="['/user']" class="btn btn-primary pull-right"><i class="fa fa-undo"></i> Back</a></h1>
+  <div class="gallery">
+    <form>
+      <label>Add Images &#160;&#160;
+        <input type="file" id="fileupload" #fileInput ng2FileSelect [style.display]="'inline'" (change)="fileInput.value=''" [uploader]="uploader" multiple />
+      </label>
+      <div *ngIf="uploader.progress > 0 || uploader.progress != 100">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':uploader.progress + '%'}">
+            <span class="sr-only">{{uploader.progress}}% Complete</span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="uploaded-images" *ngIf="user?.gallery?.length > 0">
+      <div class="row">
+        <figure class="col-md-2 col-sm-3 col-xs-12" *ngFor="let image of user.gallery">
+          <cl-image *ngIf="image != null" [public-id]="image" height="100px" width="200px" (click)="imageLarge = image; showImagePlaceholder = true"></cl-image>
+          <span class="img-del" (click)="deleteImageFromGallery(image)"><i class="fa fa-trash"></i></span>
+        </figure>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="showImagePlaceholder" class="transparent-block">
+    <div class="slider" *ngIf="imageLarge != ''">
+      <span (click)="showImagePlaceholder = false"><p>X</p></span>
+      <i (click)="deleteImageFromGallery(imageLarge)" class="fa fa-trash"></i>
+      <div class="slide">
+        <cl-image [public-id]="imageLarge" height="100%"></cl-image>
+      </div>
+    </div>
+  </div>
+</div>
+<app-chat [user]="user"></app-chat>

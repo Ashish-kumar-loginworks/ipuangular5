@@ -1,0 +1,62 @@
+{
+  "_from": "angular4-social-login",
+  "_id": "angular4-social-login@1.1.1",
+  "_inBundle": false,
+  "_integrity": "sha512-lfMaYyG8Z5D6NtwXC4abV77BtF4gVMiXqzf7fqN19Rs76WP7P2avj9/H8nTb28m93WiWROEqEp/XKpKhAqDTqg==",
+  "_location": "/angular4-social-login",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "angular4-social-login",
+    "name": "angular4-social-login",
+    "escapedName": "angular4-social-login",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular4-social-login/-/angular4-social-login-1.1.1.tgz",
+  "_shasum": "ed61571a449fad56f21488389212cc9882823d98",
+  "_spec": "angular4-social-login",
+  "_where": "C:\\Ashish\\public\\ipudev",
+  "author": {
+    "name": "Jaibatrik Dutta",
+    "email": "jaibatrik@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/abacritt/angular4-social-login/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Social login and authentication module for Angular 4 / 5. Supports authentication with **Google** and **Facebook**. Can be extended to other providers also.",
+  "homepage": "https://github.com/abacritt/angular4-social-login#readme",
+  "jsnext:main": "angular4-social-login.js",
+  "keywords": [
+    "angular",
+    "angular4",
+    "angular-social-login",
+    "social-authentication",
+    "social-login",
+    "google-authentication",
+    "facebook-authentication"
+  ],
+  "license": "MIT",
+  "main": "angular4-social-login.umd.js",
+  "module": "angular4-social-login.js",
+  "name": "angular4-social-login",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abacritt/angular4-social-login.git"
+  },
+  "typings": "angular4-social-login.d.ts",
+  "version": "1.1.1"
+}

@@ -1,0 +1,30 @@
+<div class="dashboard">
+  <app-header *ngIf="isUser" [user]="user" [isOpened]="isOpened" (toggleNav)="toggleNavigationBar($event)" (toggleHeaderNav)="toggleHeaderBar($event)"></app-header>
+  <div class="register" *ngIf="!isUser">
+      <button type="button" class="btn btn-primary" (click)="navigateLogin()"><i class="fa fa-sign-in"></i> Login</button>
+      <button type="button" class="btn btn-primary" (click)="navigateSignUp()"><i class="fa fa-user-plus"></i> Create account</button>
+  </div>
+  <img *ngIf="!isUser" class="applogo" src="../../../assets/img/ipu-icon.png" alt="">
+  <app-navbar *ngIf="isUser" [user]="user" [isOpened]="isOpened" (toggleNav)="toggleNavigationBar($event)"></app-navbar>
+  <div class="content" [ngClass]="{'navOpened': isOpened,'isNotUser': !isUser, 'isMobile':isMobile, 'topNavHide': !toggleheader }">
+      <router-outlet></router-outlet>
+  </div>
+  <div class="loginPopUpBack" [hidden]="!showLogin">
+      <div class="loginPopUp">
+          <h4>Login <i class="fa fa-close" (click)="showLogin = !showLogin"></i></h4>
+          <form class="form" [formGroup]="form" (ngSubmit)="onLoginFormSubmit()">
+              <div class="form-group" [ngClass]="{'has-danger': form.controls['username'].hasError('required') && form.controls['username'].touched}">
+                  <label for="username" class="control-label">Username</label>
+                  <input type="text" placeholder="Enter your Username" class="form-control" name="username" formControlName="username" />
+              </div>
+              <div class="form-group" [ngClass]="{'has-danger': form.controls['password'].hasError('required') && form.controls['password'].touched}">
+                  <label for="password" class="control-label">Password</label>
+                  <input type="password" placeholder="Enter your Password" class="form-control" name="password" formControlName="password"
+                  />
+              </div>
+              <p class="text-info text-danger"><b>{{loginError}}</b></p>
+              <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Login</button>
+          </form>
+      </div>
+  </div>
+</div>

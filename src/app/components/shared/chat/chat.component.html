@@ -1,0 +1,72 @@
+<div *ngIf="username">
+  <div class="chat-module" [hidden]="hidePanel">
+    <h1 class="chat-head">
+      <i class="fa fa-chevron-left" (click)="resetUserForChat()" *ngIf="!hidePanelMessages"></i> Chat <i (click)="toggle()"
+        class="fa fa-close"></i></h1>
+    <div class="chatUsers" *ngIf="hidePanelMessages">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search..." #searchUser (input)="findChatUsers(searchUser.value)">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let chatuser of chatUsers" (click)="selectUserToChat(chatuser)">
+            <div class="media">
+              <div class="media-left">
+                <cl-image *ngIf="chatuser?.image" [public-id]="chatuser.image" height="40px" width="40px" background="#ffffff">
+                  <cl-transformation radius="max" crop="crop" background="#ffffff">
+                  </cl-transformation>
+                </cl-image>
+              </div>
+              <div class="media-body"><i class="fa fa-circle" [ngClass]="chatuser.color"></i> {{chatuser.name}} <small>(Click to start chat with {{chatuser.name}}.)</small></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="chat-messages" [hidden]="hidePanelMessages">
+      <div class="status" *ngIf="!chatConneted">Conneting...</div>
+      <div class="messages-area" #messagesArea *ngIf="chatConneted">
+        <div class="message" *ngFor="let message of messages">
+          <div class="avatar" [ngClass]="{'send': message.sender == username}">
+            <cl-image *ngIf="message.sender == username" [public-id]="user.image" height="40px" width="40px" background="#addbff">
+              <cl-transformation radius="max" crop="crop" background="#ffffff">
+              </cl-transformation>
+            </cl-image>
+            <cl-image *ngIf="message.sender != username && chatUserActive?.image" [public-id]="chatUserActive.image" height="40px" width="40px"
+              background="#addbff">
+              <cl-transformation radius="max" crop="crop" background="#ffffff">
+              </cl-transformation>
+            </cl-image>
+            <!--<i class="fa fa-circle" [ngClass]="{'online': message.status === 'online'}"></i> <span>{{message.sender}}</span>-->
+          </div>
+          <div class="text"><b>{{message.sender != username? chatUserActive.name : user.name + ' ' + user.lastname}}: </b> <span>{{message.content}}</span></div>
+        </div>
+
+        <div class="nomesages" [hidden]="messages.length != 0">
+          {{chatUserActive ? 'Start chat with ' + chatUserActive?.name : 'No chat messages available for you right now.'}}
+        </div>
+
+      </div>
+    </div>
+    <div class="chat-form" [hidden]="hidePanel">
+      <form [formGroup]="chatForm" (ngSubmit)="sendMessage(messageText)">
+        <div class="form-group">
+          <div>
+            <input type="text" #messageText name="message" formControlName="message" [ngClass]="disableChat ? 'disabled' : ''" />
+          </div>
+          <div class="dropup">
+            <button type="button" class="btn btn-primary" data-toggle="dropdown"><i class="fa fa-smile-o"></i></button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let emoji of emojis" (click)="append(emoji)">{{emoji}}</li>
+            </ul>
+          </div>
+          <div><button type="submit" class="btn btn-primary" [disabled]="chatForm.controls['message'].value == ''">Send</button></div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="chat-toggler" [hidden]="!hidePanel" (click)="toggle()">
+    <i class="fa fa-comments-o"></i>
+    <span class="badge" [hidden]="newMessage == ''">{{newMessage}}</span>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+.dashboard {
+    background: #edf0f5;
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    .content {
+        margin-left: 0px;
+        margin-top: 50px;
+        @media screen and (max-width: 768px) {
+            margin-top: 50px;
+            &.topNavHide {
+                margin-top: 50px;
+            }
+        }
+    }
+    .applogo {
+        text-align: center;
+        display: block;
+        margin: 0px auto auto auto;
+        padding-top: 10px;
+        max-height: 50px;
+    }
+    .register {
+        text-align: center;
+        float: right;
+        padding: 12px 10px;
+        @media screen and (max-width: 576px) {
+            float:none;
+            margin-bottom: -10px;
+        }
+        button {
+            min-width: 120px;
+        }
+        button+button {
+            margin-left: 10px;
+        }
+    }
+    .navOpened {
+        margin-left: 220px;
+    }
+    .isMobile {
+        margin-left: 0px;
+    }
+    .isNotUser {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    .loginPopUpBack {
+        position: fixed;
+        z-index: 99999;
+        top: 0%;
+        left: 0%;
+        right: 0%;
+        bottom: 0%;
+        background: rgba(0, 0, 0, 0.7);
+        .loginPopUp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            padding: 20px;
+            width: 40%;
+            min-width: 500px;
+            box-shadow: 0px 0px 5px #ccc;
+            @media screen and (max-width: 576px) {
+                width:90%;
+                min-width: 90%;
+            }
+            h4 {
+                background: #000;
+                color: #fff;
+                font-size: 14px;
+                text-align: center;
+                padding: 8px 15px;
+                margin: -20px -20px 20px -20px;
+                padding: 10px 20px;
+                font-weight: 600;
+                .fa-close {
+                    float: right;
+                    cursor: pointer;
+                }
+            }
+            form {
+                .form-control {
+                    margin: 0px 0px;
+                }
+                button.btn-primary {
+                    float: right;
+                    min-width: 150px;
+                }
+                .has-danger {
+                    color: #a90a0a;
+                    .form-control {
+                        border-color: #a90a0a;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.chatIcon {
+    position: fixed;
+    bottom: 0%;
+    right: 10%;
+    font-size: 60px;
+    color: #3c8cbc;
+}

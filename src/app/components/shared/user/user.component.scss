@@ -1,0 +1,310 @@
+.ipu-user-settings {
+    background: #edf0f5;
+    padding: 15px 30px;
+    @media (max-width: 768px) {
+        padding:15px;
+    }
+    h1 {
+        font-size: 18px;
+        margin: 0px 0px 15px 0px;
+        color: #000;
+    }
+    h4 {
+        color: #888;
+        font-size: 14px;
+        margin: 20px 0px 10px 0px;
+    }
+    form {
+        width: 100%;
+        background: #fff;
+        margin: 0px 0px 20px 0px;
+        padding: 0px 0px 10px 0px;
+        box-shadow: 0px 0px 1px #eee;
+        input {
+            border: solid 1px #ccc;
+            padding: 5px;
+        }
+        .form-group {
+            margin-bottom: 8px;
+        }
+        input:last-child {
+            border-bottom: solid 1px #ccc;
+        }
+        .container-custom {
+            margin: auto;
+            width: 80%;
+            @media (max-width: 768px) {
+                width:100%;
+                padding: 0px 15px;
+            }
+        }
+        legend {
+            font-size: 13px;
+            color: #fff;
+            background: #374850;
+            padding: 8px 15px;
+            border-width: 0px;
+            .fa {
+                font-size: 140%;
+            }
+        }
+        .has-danger {
+            .form-control {
+                outline: 1px solid #f00;
+            }
+        }
+        label.control-label {
+            line-height: 30px;
+            font-weight: 400;
+            font-size: 13px;
+            margin-bottom: 0px;
+            white-space: pre;
+            img {
+                cursor: pointer;
+            }
+            @media (max-width: 768px) {
+                margin-bottom: 0px;
+            }
+        }
+        label[for="fileupload"] {
+            cursor: pointer;
+            background: #ececec;
+            padding: 8px 8px 2px 8px;
+            border-radius: 10px;
+            .fa {
+                font-size: 16px;
+                position: absolute;
+                top: 5px;
+                right: 25px;
+                @media screen and (max-width: 576px) {
+                    right: 25%;
+                    top: 10px;
+                }
+            }
+            .help-block {
+                font-size: 10px;
+            }
+        }
+        .user-profile {
+            width: 160px;
+            max-width: 80%;
+            margin: auto auto auto auto;
+            display: block;
+            cursor: pointer;
+        }
+        .form-control {
+            font-size: 13px;
+            border-radius: 0px !important;
+            margin-bottom: 0px;
+            width: 100%;
+            height: 30px;
+        }
+        textarea.form-control {
+            border: 1px solid #ccc;
+            resize: none;
+            height: 75px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            min-width: 100px;
+            img {
+                max-height: 18px;
+                margin-right: 8px;
+            }
+            @media screen and (max-width:576px) {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    .card-details {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        overflow: hidden;
+        input {
+            width: 100%;
+            font-size: 13px;
+            border-radius: 0px;
+            border-width: 0px;
+            margin-bottom: 0px;
+            padding: 5px;
+            height: 40px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            box-shadow: none;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+        input+input {
+            border-top-width: 1px;
+        }
+        input:nth-child(3) {
+            border-bottom: 1px solid #ccc;
+        }
+        .one-third {
+            width: 33.3%;
+            float: left;
+            margin: 0px;
+            padding: 0px;
+            input {
+                border-top: 1px solid #ccc;
+                border: none;
+                width: 100%;
+            }
+            &+.one-third {
+                border-left: 1px solid #ccc;
+            }
+        }
+    }
+    .billing-address {
+        .form-control {
+            margin-bottom: 7px;
+        }
+    }
+    .pay-accordion {
+        border: 1px solid #ccc;
+        border-top: 0px;
+        background: #fff;
+        min-height: 200px;
+        .tabs {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            background: #374850;
+            color: #fff;
+            font-size: 12px;
+            li {
+                display: inline-block;
+                cursor: pointer;
+                padding: 7px 15px;
+                &.active {
+                    background: #fff;
+                    color: #374850;
+                    border-top: solid 1px #ccc;
+                }
+                @media screen and (max-width:370px) {
+                    padding: 7px 7px;
+                }
+            }
+            li+li {
+                margin-left: 10px;
+            }
+        }
+        .tab {
+            display: none;
+            padding: 15px 0px;
+            min-height: 400px;
+            max-height: 400px;
+            overflow-y: auto;
+            &.active {
+                display: block;
+            }
+            aside {
+                display: block;
+                background: #fff;
+                padding: 5px 10px;
+                min-height: 50px;
+                font-size: 12px;
+                &+aside {
+                    border-top: solid 1px #ccc;
+                    padding-top: 10px;
+                }
+                .profile {
+                    float: left;
+                    max-width: 40px;
+                    max-height: 40px;
+                    margin-right: 10px;
+                }
+                p {
+                    margin-bottom: 5px;
+                }
+                p+p {
+                    color: #888;
+                }
+            }
+        }
+    }
+    .error-msg {
+        color: #eeeeee;
+        background: #f44336;
+        border: 2px solid #ff0000;
+        width: auto;
+        padding: 10px;
+        position: absolute;
+        top: 80%;
+        right: 0%;
+        border-radius: 6px;
+        z-index: 99999999999;
+        span {
+            display: block;
+            &+span {
+                margin-top: 4px;
+            }
+        }
+    }
+    .error-msg::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 70%;
+        border-style: solid;
+        border-color: transparent transparent #ff0000 transparent;
+        border-width: 10px;
+    }
+    .other-category {
+        margin-top: 10px;
+    }
+    .otpmodal {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        z-index: 99999999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .modal-dialog {
+            top: 30% !important;
+            transform: translate(0, -50%) !important;
+            .modal-title {
+                text-align: center;
+                font-weight: 600;
+                font-size: 18px;
+                color: #5bc0de;
+            }
+            form {
+                margin: 0px;
+            }
+            .form-group {
+                margin-bottom: 0px;
+                .control-label {
+                    margin-bottom: 15px;
+                }
+                .form-control {
+                    padding: 10px 20px;
+                    height: 40px;
+                }
+                &+.form-group {
+                    margin-top: 20px;
+                }
+            }
+            .text-danger {
+                color: red;
+            }
+            .has-danger {
+                .form-control,
+                .input-group-addon {
+                    border: 1px solid red;
+                }
+                .control-label {
+                    color: red;
+                }
+            }
+            .modal-footer {
+                text-align: center;
+            }
+        }
+    }
+}

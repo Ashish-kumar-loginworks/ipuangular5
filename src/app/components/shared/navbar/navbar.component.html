@@ -1,0 +1,22 @@
+<aside class="ipu-nav" [ngClass]="{'hide-nav':!isOpened}">
+  <div class="user">
+      <div class="col-md-4">
+          <cl-image [public-id]="user.image"  height="40" width="40" background="#222d31">
+              <cl-transformation  radius="max" crop="crop" background="#222d31">
+              </cl-transformation>
+          </cl-image>
+      </div>
+      <div class="col-md-8">
+          <span>{{user.name}}</span>
+          <span><label class="green-dot"></label>online</span>
+      </div>
+      <div class="col-md-12"><input type="text" placeholder="search"></div>
+  </div>
+  <ul>
+      <li [routerLink]="['/welcome']" (click)="hideOnMobile()" routerLinkActive="router-link-active"><i class="fa fa-home" aria-hidden="true"></i><span> Home</span></li>
+      <li [routerLink]="['/dashboard']" (click)="hideOnMobile()" routerLinkActive="router-link-active"><img src="../../../../assets/img/dashboard-icon.png" alt="User" class="" /><span> Dashboard</span></li>
+      <li [routerLink]="['/user']" (click)="hideOnMobile()" routerLinkActive="router-link-active"><img src="../../../../assets/img/profile_active.png" alt="User" class="" /> <span>   User</span></li>
+      <li [routerLink]="['/publish']" (click)="hideOnMobile()" routerLinkActive="router-link-active"><img src="../../../../assets/img/publish_active.png" alt="User" class="" /><span>   Publish</span></li>
+      <li [routerLink]="['/settings']" (click)="hideOnMobile()" routerLinkActive="router-link-active"><i class="fa fa-cogs" aria-hidden="true"></i><span>   Settings</span></li>
+  </ul>
+</aside>

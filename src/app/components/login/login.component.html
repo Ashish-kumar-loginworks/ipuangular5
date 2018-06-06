@@ -1,0 +1,114 @@
+<div class="logincontainer">
+  <div class="loginform">
+    <div class="col-1">
+      <img src="./assets/img/background1.png" alt="">
+    </div>
+    <div class="col-2">
+      <form [formGroup]="form" (ngSubmit)="onLoginFormSubmit()" *ngIf="!forgotPassword">
+        <img src="./assets/img/ipu-icon.png" alt="">
+        <h3>Sign In to Your Account</h3>
+        <div class="form-group" [ngClass]="{'has-danger': form.controls['username'].hasError('required') && form.controls['username'].touched}">
+          <input type="text" placeholder="Enter your Username" name="username" formControlName="username" />
+        </div>
+        <div class="form-group" [ngClass]="{'has-danger': form.controls['password'].hasError('required') && form.controls['password'].touched}">
+          <input type="password" placeholder="Enter your Password" name="password" formControlName="password" />
+        </div>
+        <div class="form-group" [hidden]="true">
+          <label class="control-label">
+          <input type="checkbox" name="staySignIn" formControlName="staySignIn" />
+              Stay logged in
+          </label>
+        </div>
+        <span class="forgotPassword" (click)="forgotPassword = !forgotPassword">Forgot Password</span>
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Login</button>
+        <div class="btn-toolbar">
+          <button type="button" class="btn btn-success" [routerLink]="['/signup']" [queryParams]="{type: 'Provider'}">Sign Up Provider</button>
+          <button *ngIf="false" type="button" class="btn btn-success" [routerLink]="['/signup']" [queryParams]="{type: 'User'}">Sign Up User</button>
+        </div>
+        <p *ngIf="false" class="text-right signup"><a [routerLink]="['/signup']">Create an account</a></p>
+        <button type="button" class="btn btn-danger" (click)="signInWithGoogle()"><i class="fa fa-google-plus"></i> | Sign in with Google </button>
+      </form>
+      <div class="forgotPassword" *ngIf="forgotPassword">
+        <form [formGroup]="forgotForm" (ngSubmit)="onForgotFormSubmit()">
+          <img src="./assets/img/ipu-icon.png" alt="">
+          <h3>Forgot Password</h3>
+          <div class="form-group" [ngClass]="{'has-danger': forgotForm.controls['username'].hasError('required') && forgotForm.controls['username'].touched}">
+            <input type="text" placeholder="Enter your username" name="username" formControlName="username" />
+            <div class="error-msg" *ngIf="forgotForm.controls['username']?.errors?.required && forgotForm.controls['username'].touched">
+              <span> {{forgotForm.controls['username']?.errors?.required ? 'Please enter your username.' : ''}}</span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="!forgotForm.valid">Submit</button>
+          <p class="text-right forgot" (click)="forgotPassword = !forgotPassword">Login</p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="otpmodal" *ngIf="otpFormShow">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="otpForm">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal">Enter OTP<button type="button" class="close" (click)="otpFormShow = !otpFormShow"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="otp" class="control-label">Please Enter OTP recieved on your mobile number.</label>
+              <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" minlength="6" maxlength="6" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onOTPFormSubmit()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="otpmodal" *ngIf="resetPasswordFormShow">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="resetPassword">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal1">Please enter new password <button type="button" class="close" (click)="resetPasswordFormShow = !resetPasswordFormShow"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group" [ngClass]="{'has-danger': resetPassword.controls['password']?.errors?.required && resetPassword.controls['password'].touched}">
+              <label for="password" class="control-label">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="password" *ngIf="!eyeOpen" class="form-control" placeholder="" name="password" formControlName="password" />
+                <input type="text" *ngIf="eyeOpen" class="form-control" placeholder="" name="password" formControlName="password" />
+                <span class="input-group-addon" *ngIf="eyeOpen" (click)="eyeOpen = !eyeOpen"><i class="fa fa-eye"></i></span>
+                <span class="input-group-addon" *ngIf="!eyeOpen" (click)="eyeOpen = !eyeOpen"><i class="fa fa-eye-slash"></i></span>
+              </div>
+              <div class="text-danger" *ngIf="resetPassword.controls['password']?.errors?.required && resetPassword.controls['password'].touched">
+                <b><span *ngIf="resetPassword.controls['password']?.errors?.required">Password is required</span>
+                  <span *ngIf="resetPassword.controls['password']?.errors?.pattern">Password must be atleast 6 characters longer. It must contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number and 1 special character.</span>
+                </b>
+              </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': resetPassword.controls['confirmPassword']?.errors?.required && resetPassword.controls['confirmPassword'].touched}">
+              <label for="confirmPassword" class="control-label">Confirm Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="password" *ngIf="!eyeOpen1" class="form-control" placeholder="" name="confirmPassword" formControlName="confirmPassword"
+                />
+                <input type="text" *ngIf="eyeOpen1" class="form-control" placeholder="" name="confirmPassword" formControlName="confirmPassword"
+                />
+                <span class="input-group-addon" *ngIf="eyeOpen1" (click)="eyeOpen1 = !eyeOpen1"><i class="fa fa-eye"></i></span>
+                <span class="input-group-addon" *ngIf="!eyeOpen1" (click)="eyeOpen1 = !eyeOpen1"><i class="fa fa-eye-slash"></i></span>
+              </div>
+              <div class="text-danger" *ngIf="resetPassword.controls['confirmPassword']?.errors?.required && resetPassword.controls['confirmPassword'].touched">
+                <b><span *ngIf="resetPassword.controls['confirmPassword']?.errors?.required">Confirm Password is required</span>
+                  <span *ngIf="resetPassword.controls['confirmPassword']?.errors?.pattern">Confirm Password must be atleast 6 characters longer. It must contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number and 1 special character.</span>
+                </b>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="confirmResetPasswordPopup()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

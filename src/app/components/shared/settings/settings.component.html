@@ -1,0 +1,161 @@
+<div class="ipu-settings">
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+      <h1>Settings </h1>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <p class="resetPasswordButton"><button type="button" class="btn btn-primary" (click)="requestOtpForResetPassword()">Reset Password</button></p>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="col-md-6">
+      <form [formGroup]="inviteUserForm" (ngSubmit)="onFormSubmit()">
+        <legend>Invite User</legend>
+        <div *ngIf="inviteUserFormDisabled" class="text-div" [innerHtml]="inviteUser"></div>
+        <div *ngIf="!inviteUserFormDisabled" class="form-group">
+          <textarea name="inviteUser" formControlName="referral" #inviteUser (change)="onChangeHTMLUpdate('invite_User',inviteUser.value)"
+            class="form-control"></textarea>
+          <span class="help-block">Please do not change or remove <b>[link]</b>.</span>
+        </div>
+        <div class="text-right">
+          <button type="button" class="btn btn-primary" (click)="inviteUserFormDisabled = !inviteUserFormDisabled">Edit</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form [formGroup]="inviteProviderForm" (ngSubmit)="onFormSubmit()">
+        <legend>Invite Provider</legend>
+        <div *ngIf="inviteProviderFormDisabled" class="text-div" [innerHtml]="inviteProvider"></div>
+        <div *ngIf="!inviteProviderFormDisabled" class="form-group">
+          <textarea name="inviteProvider" formControlName="referral" #inviteProvider (change)="onChangeHTMLUpdate('invite_Provider',inviteProvider.value)"
+            class="form-control"></textarea>
+          <span class="help-block">Please do not change or remove <b>[link]</b>.</span>
+        </div>
+        <div class="text-right">
+          <button type="button" class="btn btn-primary" (click)="inviteProviderFormDisabled = !inviteProviderFormDisabled">Edit</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6">
+      <form [formGroup]="publishProviderForm" (ngSubmit)="onFormSubmit()">
+        <legend>Publish Provider</legend>
+        <div *ngIf="publishProviderFormDisabled" class="text-div" [innerHtml]="publishProvider"></div>
+        <div *ngIf="!publishProviderFormDisabled" class="form-group">
+          <textarea name="publishProvider" formControlName="referral" class="form-control" #publishProvider (change)="onChangeHTMLUpdate('publish_provider',publishProvider.value)"></textarea>
+          <span class="help-block">Please do not change or remove <b>[link]</b>.</span>
+        </div>
+        <div class="text-right">
+          <button type="button" class="btn btn-primary" (click)="publishProviderFormDisabled = !publishProviderFormDisabled">Edit</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6" *ngIf="isProvider">
+      <form [formGroup]="askReferralForm" (ngSubmit)="onFormSubmit()">
+        <legend>Ask For Referral</legend>
+        <div *ngIf="askReferralFormDisabled" class="text-div" [innerHtml]="askReferral"></div>
+        <div *ngIf="!askReferralFormDisabled" class="form-group">
+          <textarea name="publishProvider" formControlName="referral" class="form-control" #askReferral (change)="onChangeHTMLUpdate('ask_referral',askReferral.value)"></textarea>
+          <span class="help-block">Please do not change or remove <b>[link]</b>.</span>
+        </div>
+        <div class="text-right">
+          <button type="button" class="btn btn-primary" (click)="askReferralFormDisabled = !askReferralFormDisabled">Edit</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="otpmodal" *ngIf="resetPassswordOTPPopupShow">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="resetPasswordOTP">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal">Enter OTP <button type="button" class="close" (click)="resetPassswordOTPPopupShow = !resetPassswordOTPPopupShow"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="otp" class="control-label">Please Enter OTP recieved on your mobile number.</label>
+              <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" minlength="6" maxlength="6" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="verifyResetPasswordOTP()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="otpmodal" *ngIf="resetPassswordPopupShow">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="resetPassword">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal1">Please enter new password <button type="button" class="close" (click)="resetPassswordPopupShow = !resetPassswordPopupShow"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group" [ngClass]="{'has-danger': resetPassword.controls['password']?.errors?.required && resetPassword.controls['password'].touched}">
+              <label for="password" class="control-label">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="password" *ngIf="!eyeOpen" class="form-control" placeholder="" name="password" formControlName="password" />
+                <input type="text" *ngIf="eyeOpen" class="form-control" placeholder="" name="password" formControlName="password" />
+                <span class="input-group-addon" *ngIf="eyeOpen" (click)="eyeOpen = !eyeOpen"><i class="fa fa-eye"></i></span>
+                <span class="input-group-addon" *ngIf="!eyeOpen" (click)="eyeOpen = !eyeOpen"><i class="fa fa-eye-slash"></i></span>
+              </div>
+              <div class="text-danger" *ngIf="resetPassword.controls['password']?.errors?.required && resetPassword.controls['password'].touched">
+                <b><span *ngIf="resetPassword.controls['password']?.errors?.required">Password is required</span>
+                  <span *ngIf="resetPassword.controls['password']?.errors?.pattern">Password must be atleast 6 characters longer. It must contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number and 1 special character.</span>
+                </b>
+              </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-danger': resetPassword.controls['confirmPassword']?.errors?.required && resetPassword.controls['confirmPassword'].touched}">
+              <label for="confirmPassword" class="control-label">Confirm Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="password" *ngIf="!eyeOpen1" class="form-control" placeholder="" name="confirmPassword" formControlName="confirmPassword"
+                />
+                <input type="text" *ngIf="eyeOpen1" class="form-control" placeholder="" name="confirmPassword" formControlName="confirmPassword"
+                />
+                <span class="input-group-addon" *ngIf="eyeOpen1" (click)="eyeOpen1 = !eyeOpen1"><i class="fa fa-eye"></i></span>
+                <span class="input-group-addon" *ngIf="!eyeOpen1" (click)="eyeOpen1 = !eyeOpen1"><i class="fa fa-eye-slash"></i></span>
+              </div>
+              <div class="text-danger" *ngIf="resetPassword.controls['confirmPassword']?.errors?.required && resetPassword.controls['confirmPassword'].touched">
+                <b><span *ngIf="resetPassword.controls['confirmPassword']?.errors?.required">Confirm Password is required</span>
+                  <span *ngIf="resetPassword.controls['confirmPassword']?.errors?.pattern">Confirm Password must be atleast 6 characters longer. It must contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number and 1 special character.</span>
+                </b>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="confirmResetPasswordPopup()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="otpmodal" *ngIf="settingUpdateOTPShow">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="settingUpdateOTP">
+          <div class="modal-header">
+            <h5 class="modal-title text-info" id="otpmodal">Enter OTP <button type="button" class="close" (click)="settingUpdateOTPShow = !settingUpdateOTPShow"><span aria-hidden="true">&times;</span></button></h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="otp" class="control-label">Please Enter OTP recieved on your mobile number.</label>
+              <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" minlength="6" maxlength="6" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="updateUserSetting()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <app-chat [user]="user"></app-chat>
+</div>

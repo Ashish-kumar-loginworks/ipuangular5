@@ -1,0 +1,256 @@
+<div class="publish">
+  <div class="container-fluid">
+      <h1>Publish</h1>
+      <form [formGroup]="searchProvideForm" class="searchProvideForm">
+          <div class="">
+              <div class="row">
+                  <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                          <label for="profession">Profession</label>
+                          <!--<input type="text" class="form-control" id="profession" formControlName="profession" placeholder="Profession"
+                          />-->
+                          <select class="form-control" name="profession" formControlName="profession" #userprofession (change)='filterCategoriesBasedOnProfession(userprofession.value)'>
+                              <option  value="">--Select a Profession--</option>
+                              <option [value]="cat.category" *ngFor="let cat of categories">{{cat.category}}</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                          <label for="category">Category</label>
+                          <!--<input type="text" class="form-control" id="category" formControlName="category" placeholder="Category" />-->
+                          <select class="form-control" name="category" formControlName="category" #usercategory>
+                              <option  value="">--Select a category--</option>
+                              <option  [value]="subcategory" *ngFor="let subcategory of subCategories">{{subcategory}}</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                          <label for="category">Search</label>
+                          <input class="form-control" type="text" name="search" formControlName="search" #search (input)="getAllProviders()" placeholder="Phone/Email/Username"
+                          />
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-3">
+                      <button (click)="getAllProviders()" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                  </div>
+              </div>
+          </div>
+      </form>
+      <div class="table-responsive" *ngIf="!mobileView">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Profession</th>
+                      <th>Category</th>
+                      <th>Avg. Rating</th>
+                      <th>Payment</th>
+                      <th>Address</th>
+                      <th>Website</th>
+                      <th>Publish</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngIf="providers.length == 0">
+                      <td colspan="10" class="text-center text-danger"><b>No records found</b></td>
+                  </tr>
+                  <tr *ngFor="let provider of providers">
+                      <td>{{provider?.name}} {{provider?.lastname}}</td>
+                      <td><a [href]="'mailto:' + provider?.email">{{provider?.email}}</a></td>
+                      <td><a [href]="'tel:' + provider?.phone">{{provider?.phone}}</a></td>
+                      <td>{{provider?.providing?.profession}}</td>
+                      <td>{{provider?.providing?.category}}</td>
+                      <td>
+                          <bar-rating [(rate)]="provider.rating" [max]="5" readOnly="true" disabled="true"></bar-rating>
+                      </td>
+                      <td>{{provider?.balance ? provider?.balance : 0}}</td>
+                      <td>{{provider?.address}}</td>
+                      <td><a [href]="provider?.providing?.website">{{provider?.providing?.website}}</a></td>
+                      <td>
+                          <p><span (click)="publishUserPopUpShow(provider)"><img src="../../../../assets/img/p.png" alt="User" /></span>
+                              <span (click)="detailUserPopUpShow(provider._id)"><img src="../../../../assets/img/d.png" alt="User" /></span></p>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <div class="list-view" *ngIf="mobileView">
+          <ul class="providers">
+              <li *ngIf="providers.length == 0" class="text-center text-danger"><b>No records found</b></li>
+              <li *ngFor="let provider of providers">
+                  <p class="tools"><span (click)="publishUserPopUpShow(provider)"><img src="../../../../assets/img/p.png" alt="User" /></span>
+                      <span (click)="detailUserPopUpShow(provider._id)"><img src="../../../../assets/img/d.png" alt="User" /></span></p>
+                  <p>{{provider?.name}} {{provider?.lastname}}</p>
+                  <p>Amount {{provider?.balance ? provider?.balance : 0}}</p>
+                  <p>
+                      <bar-rating [(rate)]="provider.rating" [max]="5" readOnly="true" disabled="true"></bar-rating>
+                  </p>
+                  <p><a [href]="'mailto:' + provider?.email">{{provider?.email}}</a></p>
+                  <p><a [href]="'tel:' + provider?.phone">{{provider?.phone}}</a></p>
+                  <p>{{provider?.providing?.profession}} ({{provider?.providing?.category}})</p>
+                  <p>{{provider?.address}}</p>
+                  <p><a [href]="provider?.providing?.website">{{provider?.providing?.website}}</a></p>
+              </li>
+          </ul>
+      </div>
+
+      <div class="transparent-bg" *ngIf="publishUserPopUpShown || detailUserPopUpShown || InviteUserPopUpShown"></div>
+
+      <div class="inviteProviderPopUp" *ngIf="publishUserPopUpShown">
+          <h1>Publish User <span (click)="publishUserPopUpHide()" class="pull-right"><i class="fa fa-close"></i></span></h1>
+          <div class="wrap">
+              <form [formGroup]="publishForm" (ngSubmit)="onPublishUserFormSubmit()">
+                  <label>Reference</label>
+                  <div class="form-group" [ngClass]="{'has-danger': publishForm.controls['reference'].hasError('required') && publishForm.controls['reference'].touched}">
+                      <textarea class="form-control" id="inviteMessage" placeholder="Please enter your reference message here ..." name="reference"
+                          formControlName="reference" #invite (input)="publishUserWhatsappShare(invite.value)"></textarea>
+                      <div class="btn-toolbar">
+                          <button class="btn btn-primary" ngxClipboard [cbContent]="invite.value" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>Copy</button>
+                          <a class="btn btn-primary" target="_blank" [href]="publishWhastApp"><i class="fa fa-share-alt" aria-hidden="true"></i> Share via WhatsApp </a>
+                      </div>
+                  </div>
+                  <p class="clearfix"></p>
+                  <div class="send-via"><span><b>Send Via</b></span>
+                      <label [ngClass]="{'active':publishForm.controls['destinationType'].value == 'SMS'}">
+                          <img src="../../../../assets/img/message.png" alt="User" />
+                          <input type="radio" name="destinationType" formControlName="destinationType" value="SMS" />
+                      </label>
+                      <label *ngIf="false" [ngClass]="{'active':publishForm.controls['destinationType'].value == 'WHATSUP'}">
+                          <img src="../../../../assets/img/whatsapp.png" alt="User" />
+                          <input type="radio" name="destinationType" formControlName="destinationType" value="WHATSUP" />
+                      </label>
+                      <label [ngClass]="{'active':publishForm.controls['destinationType'].value == 'EMAIL'}">
+                          <img src="../../../../assets/img/email.png" alt="User" />
+                          <input type="radio" name="destinationType" formControlName="destinationType" value="EMAIL" />
+                      </label>
+                  </div>
+                  <p class="clearfix"></p>
+                  <div class="form-group" [ngClass]="{'has-danger': publishForm.controls['email']?.errors && publishForm.controls['email'].dirty && publishForm.controls['email'].touched}"
+                      *ngIf="publishForm.controls['destinationType'].value == 'EMAIL'">
+                      <label>Email</label>
+                      <input type="email" class="form-control" placeholder="Please enter your email ..." name="email" formControlName="email" />
+                      <p class="text-danger" *ngIf="publishForm.controls['email']?.errors && publishForm.controls['email'].dirty && publishForm.controls['email'].touched">Please Enter a valid Email id.</p>
+                  </div>
+                  <div class="form-group" *ngIf="publishForm.controls['destinationType'].value != 'EMAIL'" [ngClass]="{'has-danger': publishForm.controls['phone']?.errors && publishForm.controls['phone'].dirty && publishForm.controls['phone'].touched}">
+                      <label>Phone</label>
+                      <input type="text" class="form-control" placeholder="Please enter your phone ..." name="phone" formControlName="phone" />
+                      <p class="text-danger" *ngIf="publishForm.controls['phone']?.errors && publishForm.controls['phone'].dirty && publishForm.controls['phone'].touched">Please Enter a valid Phone number.</p>
+                  </div>
+                  <div class="btn-toolbar">
+                      <button type="submit" class="btn btn-primary" [disabled]="(publishForm.controls['destinationType'].value == 'EMAIL' && publishForm.controls['email'].invalid) || (publishForm.controls['destinationType'].value != 'EMAIL' && (publishForm.controls['phone'].pristine || publishForm.controls['phone'].invalid))">Send</button>
+                  </div>
+                  <p class="clearfix"></p>
+              </form>
+          </div>
+      </div>
+
+      <div class="publisher-detail" *ngIf="detailUserPopUpShown && selectedUser">
+          <div class="popup">
+              <h3>Details <span (click)="detailUserPopUpHide()" class="pull-right"><i class="fa fa-close"></i></span></h3>
+              <figure class="text-center">
+                  <cl-image [public-id]="selectedUser.image" height="100" width="100" background="#ffffff">
+                      <cl-transformation radius="max" crop="crop" background="#ffffff">
+                      </cl-transformation>
+                  </cl-image>
+                  <caption>{{selectedUser.name}} {{selectedUser.lastname}}</caption>
+              </figure>
+              <div class="clr"></div>
+              <div class="col-md-4">
+                  <div class="black-tab"><span><b>{{selectedUser?.stats?.payments}}</b> <br/>Services</span></div>
+              </div>
+              <div class="col-md-4">
+                  <div class="black-tab"><span><b>{{selectedUser?.stats?.reviews}}</b> <br/>Reviews</span></div>
+              </div>
+              <div class="col-md-4">
+                  <div class="black-tab"><span><b>{{selectedUser?.stats?.avg_score}}</b> <br/>Avg. score</span></div>
+              </div>
+              <table>
+                  <tr>
+                      <td>Email</td>
+                      <td>:</td>
+                      <td>{{selectedUser.email}}</td>
+                  </tr>
+                  <tr>
+                      <td>Phone</td>
+                      <td>:</td>
+                      <td>{{selectedUser.phone}}</td>
+                  </tr>
+                  <tr>
+                      <td>Address</td>
+                      <td>:</td>
+                      <td>{{selectedUser.address}}</td>
+                  </tr>
+                  <tr>
+                      <td>Profession</td>
+                      <td>:</td>
+                      <td>{{selectedUser.providing?.profession}}</td>
+                  </tr>
+                  <tr>
+                      <td>Category</td>
+                      <td>:</td>
+                      <td>{{selectedUser.providing?.category}}</td>
+                  </tr>
+                  <tr>
+                      <td>Website</td>
+                      <td>:</td>
+                      <td>{{selectedUser.providing?.website}}</td>
+                  </tr>
+              </table>
+              <button [routerLink]="['/user/'+selectedUser._id]" class="btn btn-primary">Click To Get More Details</button>
+          </div>
+      </div>
+      <button class="btn btn-primary" (click)="InviteUserPopUpShow()">Invite Provider</button>
+
+
+      <div class="inviteProviderPopUp" *ngIf="InviteUserPopUpShown">
+          <h1>Invite Provider <span (click)="InviteUserPopUpHide()" class="pull-right"><i class="fa fa-close"></i></span></h1>
+          <form [formGroup]="inviteForm" (ngSubmit)="onInviteUserFormSubmit()">
+              <label>Reference</label>
+              <div class="form-group" [ngClass]="{'has-danger': inviteForm.controls['reference'].hasError('required') && inviteForm.controls['reference'].touched}">
+                  <textarea class="form-control" id="inviteMessage" placeholder="Please enter your reference message here ..." name="reference"
+                      formControlName="reference" #invite (input)="inviteUserWhatsappShare(invite.value)"></textarea>
+                  <div class="btn-toolbar">
+                      <button class="btn btn-primary" ngxClipboard [cbContent]="invite.value" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>Copy</button>
+                      <a class="btn btn-primary" target="_blank" [href]="inviteWhastApp"><i class="fa fa-share-alt" aria-hidden="true"></i> Share via WhatsApp </a>
+                  </div>
+              </div>
+              <p class="clearfix"></p>
+              <div class="send-via"><span><b>Send Via</b></span>
+                  <label [ngClass]="{'active':inviteForm.controls['destinationType'].value == 'SMS'}">
+                      <img src="../../../../assets/img/message.png" alt="User" />
+                      <input type="radio" name="destinationType" formControlName="destinationType" value="SMS" />
+                  </label>
+                  <label *ngIf="false" [ngClass]="{'active':inviteForm.controls['destinationType'].value == 'WHATSUP'}">
+                      <img src="../../../../assets/img/whatsapp.png" alt="User" />
+                      <input type="radio" name="destinationType" formControlName="destinationType" value="WHATSUP" />
+                  </label>
+                  <label [ngClass]="{'active':inviteForm.controls['destinationType'].value == 'EMAIL'}">
+                      <img src="../../../../assets/img/email.png" alt="User" />
+                      <input type="radio" name="destinationType" formControlName="destinationType" value="EMAIL" />
+                  </label>
+              </div>
+              <p class="clearfix"></p>
+              <div class="form-group" [ngClass]="{'has-danger': inviteForm.controls['email']?.errors && inviteForm.controls['email'].dirty && inviteForm.controls['email'].touched}"
+                  *ngIf="inviteForm.controls['destinationType'].value == 'EMAIL'">
+                  <label>Email</label>
+                  <input type="email" class="form-control" placeholder="Please enter your email ..." name="email" formControlName="email" />
+                  <p class="text-danger" *ngIf="inviteForm.controls['email']?.errors && inviteForm.controls['email'].dirty && inviteForm.controls['email'].touched">Please Enter a valid Email id.</p>
+              </div>
+              <div class="form-group" *ngIf="inviteForm.controls['destinationType'].value != 'EMAIL'" [ngClass]="{'has-danger': inviteForm.controls['phone']?.errors && inviteForm.controls['phone'].dirty && inviteForm.controls['phone'].touched}">
+                  <label>Phone</label>
+                  <input type="text" class="form-control" placeholder="Please enter your phone ..." name="phone" formControlName="phone" />
+                  <p class="text-danger" *ngIf="inviteForm.controls['phone']?.errors && inviteForm.controls['phone'].dirty && inviteForm.controls['phone'].touched">Please Enter a valid Phone number.</p>
+              </div>
+              <div class="btn-toolbar">
+                  <button type="submit" class="btn btn-primary" [disabled]="(inviteForm.controls['destinationType'].value == 'EMAIL' && inviteForm.controls['email'].invalid) || (inviteForm.controls['destinationType'].value != 'EMAIL' && (inviteForm.controls['phone'].pristine || inviteForm.controls['phone'].invalid))">Send</button>
+              </div>
+              <p class="clearfix"></p>
+          </form>
+      </div>
+  </div>
+  <app-chat [user]="user"></app-chat>
+</div>

@@ -1,0 +1,319 @@
+<div class="ipu-user-settings">
+  <h1>User</h1>
+
+  <div class="row">
+      <div class="col-lg-12">
+          <form [formGroup]="basicDetails">
+              <legend>Basic Details <i class="pull-right fa fa-chevron-down"></i></legend>
+              <div class="container-custom">
+                  <div class="row">
+                      <div class="col-lg-3 text-center" id="profile">
+                          <label for="fileupload">
+                              <span class="fa fa-camera"></span>
+                              <img *ngIf="!user?.image" src="../../assets/img/add-a-pic.png" class="user-profile" alt="">
+                              <cl-image *ngIf="user?.image" [public-id]="user.image"  height="100px" width="100px" background="#ececec">
+                                  <cl-transformation radius="max" crop="crop" background="#ffffff">
+                                  </cl-transformation>
+                              </cl-image>
+                              <span class="help-block">Click here to upload new profile image.</span>
+                              <input type="file" id="fileupload" #fileInput ng2FileSelect [style.display]="'none'" [uploader]="uploader" (change)="fileInput.value=''" multiple />
+                          </label>
+                      </div>
+                      <div class="col-lg-9">
+                          <div class="row">
+                              <div class="col-lg-2 col-sm-4"><label for="firstname" class="control-label">First Name</label></div>
+                              <div class="col-lg-4 col-sm-8">
+                                  <div class="form-group" [ngClass]="{'has-danger': (basicDetails.controls['firstname']?.errors?.required || basicDetails.controls['firstname']?.errors?.minlength || basicDetails.controls['firstname']?.errors?.maxlength) && basicDetails.controls['firstname'].touched}">
+                                      <div class="error-msg" *ngIf="basicDetails.controls['firstname']?.errors && basicDetails.controls['firstname'].touched">
+                                          <span>{{basicDetails.controls['firstname'].errors.required ? 'Firstname cannot be empty.' : ''}}</span>
+                                          <span>{{basicDetails.controls['firstname'].errors.minlength ? 'Username must have atleast 3 characters.' : ''}}</span>
+                                      </div>
+                                      <input type="text" class="form-control" [attr.placeholder]="user.firstname" name="firstname" formControlName="firstname"
+                                      />
+                                  </div>
+                              </div>
+                              <div class="clearfix visible-sm visible-md"></div>
+                              <div class="col-lg-2 col-sm-4"><label for="lastname" class="control-label">Last Name</label></div>
+                              <div class="col-lg-4 col-sm-8">
+                                  <div class="form-group" [ngClass]="{'has-danger': (basicDetails.controls['lastname']?.errors?.required || basicDetails.controls['lastname']?.errors?.minlength || basicDetails.controls['lastname']?.errors?.maxlength) && basicDetails.controls['lastname'].touched}">
+                                      <div class="error-msg" *ngIf="basicDetails.controls['lastname']?.errors && basicDetails.controls['lastname'].touched">
+                                          <span>{{basicDetails.controls['lastname'].errors.required ? 'Lastname cannot be empty.' : ''}}</span>
+                                          <span>{{basicDetails.controls['lastname'].errors.minlength ? 'Lastname must have atleast 3 characters.' : ''}}</span>
+                                      </div> <input type="text" class="form-control" [attr.placeholder]="user.lastname"
+                                          name="lastname" formControlName="lastname" />
+                                  </div>
+                              </div>
+
+                              <div class="col-lg-2 col-sm-4"><label for="email" class="control-label">Email</label></div>
+                              <div class="col-lg-4 col-sm-8">
+                                  <div class="form-group" [ngClass]="{'has-danger': (basicDetails.controls['email']?.errors?.required || basicDetails.controls['email']?.errors?.email) && basicDetails.controls['email'].touched}">
+                                      <div class="error-msg" *ngIf="basicDetails.controls['email']?.errors && basicDetails.controls['email'].touched">
+                                          <span>{{basicDetails.controls['email'].errors.required ? 'Email cannot be empty.' : ''}}</span>
+                                          <span>{{basicDetails.controls['email'].errors.email ? 'Please enter a valid email id.' : ''}}</span>
+                                      </div>
+                                      <input type="email" class="form-control" [attr.placeholder]="user.email" name="email" formControlName="email" />
+                                  </div>
+                              </div>
+                              <div class="clearfix visible-sm visible-md"></div>
+                              <div class="col-lg-2 col-sm-4"><label for="phone" class="control-label">Phone</label></div>
+                              <div class="col-lg-4 col-sm-8">
+                                  <div class="form-group" [ngClass]="{'has-danger': (basicDetails.controls['phone']?.errors?.pattern) && basicDetails.controls['phone'].touched}">
+                                      <div class="error-msg" *ngIf="basicDetails.controls['phone']?.errors && basicDetails.controls['phone'].touched">
+                                          <span>{{basicDetails.controls['phone'].errors.minlength ? 'Too short phone number.' : ''}}</span>
+                                          <span>{{basicDetails.controls['phone'].errors.pattern ? 'Please enter a valid phone number.' : ''}}</span>
+                                      </div>
+                                      <input type="text" class="form-control" [attr.placeholder]="user?.phone" name="phone" formControlName="phone" />
+                                  </div>
+                              </div>
+                              <div class="clearfix"></div>
+                              <div class="col-lg-12">
+                                  <div class="text-right">
+                                      <button type="button" (click)="sendOtpForBasicDetails()" [disabled]="basicDetails.invalid" class="btn btn-primary">Submit</button>
+                                      <!--data-toggle="modal" data-target="#otpModal"-->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+
+      <div *ngIf="false" class="col-lg-6">
+          <form [formGroup]="paymentDetails" (ngSubmit)="onPaymentDetailsFormSubmit(paymentDetails.value)">
+              <legend>Save Debit and Credit Card <i class="pull-right fa fa-chevron-down"></i></legend>
+              <div class="container-fluid">
+                  <div class="payment-logos"><img src="../../assets/img/card.png" alt=""></div>
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <h4>Billing Information</h4>
+                          <div class="card-details">
+                              <input type="text" placeholder="user" />
+                              <input type="text" placeholder="smith" />
+                              <input type="text" placeholder="Card Number" />
+                              <i class="fa fa-visa"></i>
+                              <div class="one-third">
+                                  <input type="text" placeholder="06" />
+                              </div>
+                              <div class="one-third">
+                                  <input type="text" placeholder="2021" />
+                              </div>
+                              <div class="one-third">
+                                  <input type="text" placeholder="cvv" />
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-sm-6">
+                          <h4>Billing Address</h4>
+                          <div class="billing-address">
+                              <input type="text" class="form-control" placeholder="" />
+                              <input type="text" class="form-control" placeholder="" />
+                              <input type="text" class="form-control" placeholder="08015" />
+                              <select class="form-control">
+                                  <option>spain</option>
+                                  <option>Barcelona</option>
+                              </select>
+                              <select class="form-control">
+                                  <option>Select state/province</option>
+                                  <option>Barcelona</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="removecard-wrap">
+                          <button class="btn btn-primary  pull-right">Save</button>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+
+      <div class="col-lg-6">
+          <form class="bussinessDetails" [formGroup]="bussinessDetails" (ngSubmit)="sendBussinessOtp()">
+              <legend>Bussiness Details <i class="pull-right fa fa-chevron-down"></i></legend>
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-sm-3"><label for="profession" class="control-label">Profession</label></div>
+                      <div class="col-sm-9">
+                          <div class="form-group" [ngClass]="{'has-danger': bussinessDetails.controls['profession']?.errors?.required && bussinessDetails.controls['profession'].dirty}">
+                              <div class="error-msg" *ngIf="bussinessDetails.controls['profession']?.errors && bussinessDetails.controls['profession'].dirty">
+                                  <span>{{bussinessDetails.controls['profession'].errors.required ? 'Please fill this field..' : ''}}</span>
+                              </div>
+                              <ng-select [multiple]="true" [items]="categories" [active]="userCategories" (data)="refreshCategory($event)" (selected)="selectedCategory($event)" (removed)="removedCategory($event)" placeholder="No Profession selected"></ng-select>
+                              <input type="hidden" class="form-control" name="profession" formControlName="profession" />
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-3"><label for="category" class="control-label">Category</label></div>
+                      <div class="col-sm-9">
+                          <div class="form-group" [ngClass]="{'has-danger': bussinessDetails.controls['category']?.errors?.required && bussinessDetails.controls['category'].dirty}">
+                              <div class="error-msg" *ngIf="bussinessDetails.controls['category']?.errors && bussinessDetails.controls['category'].dirty">
+                                  <span>{{bussinessDetails.controls['category'].errors.required ? 'Please fill this field.' : ''}}</span>
+                              </div>
+                              <ng-select [multiple]="true" [items]="subCategories" [active]="usersubCategories" (data)="refreshSubCategory($event)" (selected)="selectedSubCategory($event)" (removed)="removedSubCategory($event)" placeholder="No Category selected"></ng-select>
+                              <input type="hidden" class="form-control" name="category" formControlName="category" />
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-3"><label for="website" class="control-label">Website</label></div>
+                      <div class="col-sm-9">
+                          <div class="form-group" [ngClass]="{'has-danger': bussinessDetails.controls['website']?.errors?.pattern && bussinessDetails.controls['website'].dirty}">
+                              <div class="error-msg" *ngIf="bussinessDetails.controls['website']?.errors && bussinessDetails.controls['website'].dirty">
+                                  <span>{{bussinessDetails.controls['website'].errors.pattern ? 'Please fill valid website address.' : ''}}</span>
+                              </div>
+                              <input type="text" class="form-control" [attr.placeholder]="user?.providing?.website" name="website" formControlName="website"
+                              />
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-3"><label for="address" class="control-label">Address</label></div>
+                      <div class="col-sm-9">
+                          <div class="form-group" [ngClass]="{'has-danger': bussinessDetails.controls['address']?.errors?.required && bussinessDetails.controls['address'].dirty}">
+                              <div class="error-msg" *ngIf="bussinessDetails.controls['address']?.errors && bussinessDetails.controls['address'].dirty">
+                                  <span>{{bussinessDetails.controls['address'].errors.required ? 'Please fill this field.' : ''}}</span>
+                              </div>
+                              <input type="text" class="form-control" [attr.placeholder]="user?.address" name="address" formControlName="address" #search1
+                              />
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-3"><label for="about" class="control-label">About</label></div>
+                      <div class="col-sm-9">
+                          <div class="form-group" [ngClass]="{'has-danger': bussinessDetails.controls['about']?.errors?.required && bussinessDetails.controls['about'].dirty}">
+                              <textarea class="form-control" name="about" formControlName="about" [attr.placeholder]="user?.providing?.about"></textarea>
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="text-right col-sm-12">
+                          <button *ngIf="isProvider" class="btn btn-primary" type="button" [routerLink]="['/gallery']"><img src="../../assets/img/add-gallery.png" alt=""> Manage Gallery</button>
+                          <button class="btn btn-primary" [disabled]="bussinessDetails.invalid" type="submit">Submit</button>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+
+      <div class="col-sm-6">
+
+          <div class="pay-accordion">
+              <ul class="tabs">
+                  <li (click)="activetab = 'PayHistory'" [ngClass]="{'active': activetab == 'PayHistory'}">Pay History</li>
+                  <li *ngIf="isProvider" (click)="activetab = 'PayRecieved'" [ngClass]="{'active': activetab == 'PayRecieved'}">Pay Recieved</li>
+                  <li (click)="activetab = 'ReferralsPayed'" [ngClass]="{'active': activetab == 'ReferralsPayed'}">Referrals Payed</li>
+              </ul>
+              <div class="tab tab-1" [ngClass]="{'active': activetab == 'PayHistory'}">
+                  <div *ngIf="user.pay_payed">
+                      <aside *ngFor="let pay of user.pay_payed">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <cl-image *ngIf="pay?.target_img" [public-id]="pay.target_img" height="40" width="40" background="#ffffff" class="profile">
+                                          <cl-transformation radius="max" crop="crop" background="#ffffff">
+                                          </cl-transformation>
+                                      </cl-image>
+                                  </td>
+                                  <td>
+                                      <p><span class="date">({{pay.timestamp | date:"yyyy-MM-dd"}})</span> &#x2013; {{pay.source}}</p>
+                                      <p><span class="date">${{pay.amount}} [{{pay.source_str}}]</span></p>
+                                      <p><span class="date"><bar-rating [(rate)]="pay.rate" [max]="5" readOnly="true" disabled="true"></bar-rating></span></p>
+                                      <p><span class="date">{{pay.review}}</span></p>
+                                  </td>
+                              </tr>
+                          </table>
+                      </aside>
+                  </div>
+              </div>
+              <div class="tab tab-2 active" *ngIf="isProvider" [ngClass]="{'active': activetab == 'PayRecieved'}">
+                  <div *ngIf="user.pay_received">
+                      <aside *ngFor="let pay of user.pay_received">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <cl-image *ngIf="pay?.source_img" [public-id]="pay.source_img" height="40" width="40" background="#ffffff" class="profile">
+                                          <cl-transformation radius="max" crop="crop" background="#ffffff">
+                                          </cl-transformation>
+                                      </cl-image>
+                                  </td>
+                                  <td>
+                                      <p><span class="date">({{pay.timestamp | date:"yyyy-MM-dd"}})</span> &#x2013; {{pay.source}}</p>
+                                      <p><span class="date">{{pay.amount}} [{{pay.source_str}}]</span></p>
+                                      <p><span class="date"><bar-rating [(rate)]="pay.rate" [max]="5" readOnly="true" disabled="true"></bar-rating></span></p>
+                                      <p><span class="date">{{pay.review}}</span></p>
+                                  </td>
+                              </tr>
+                          </table>
+                      </aside>
+                  </div>
+              </div>
+              <div class="tab tab-3" [ngClass]="{'active': activetab == 'ReferralsPayed'}">
+                  <div *ngIf="user.pay_referral">
+                      <aside *ngFor="let pay of user.pay_referral">
+                          <table>
+                              <tr>
+                                  <td width="50">
+                                      <cl-image *ngIf="pay?.target_img" [public-id]="pay.target_img" height="40" width="40" background="#ffffff" class="profile">
+                                          <cl-transformation radius="max" crop="crop" background="#ffffff">
+                                          </cl-transformation>
+                                      </cl-image>
+                                  </td>
+                                  <td>
+                                      <!--<p><span class="date">({{pay.timestamp | date:"yyyy-MM-dd"}})</span> &#x2013; {{pay.source}}</p>
+                                      <p><span class="date">{{pay.amount}} [{{pay.source_str}}]</span></p>
+                                      <p><span class="date">{{pay.review}}</span></p>-->
+                                      <p><span class="date">${{pay.amount}} [{{pay.title}}]</span></p>
+                                      <p><span class="date"><bar-rating [(rate)]="pay.rate" [max]="5" readOnly="true" disabled="true"></bar-rating></span></p>
+                                      <p><span class="date">{{pay.review}}</span></p>
+                                  </td>
+                              </tr>
+                          </table>
+                      </aside>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <div class="otpmodal" *ngIf="otpFormShown">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <form [formGroup]="otpForm">
+                  <div class="modal-header">
+                      <h5 class="modal-title text-info" id="otpmodal">Please Enter OTP recieved <button type="button" class="close" (click)="otpFormShown = !otpFormShown"><span aria-hidden="true">&times;</span></button></h5>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" />
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onBasicFormSubmit()">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <div class="otpmodal" *ngIf="otpForm1Shown">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <form [formGroup]="otpForm1">
+                  <div class="modal-header">
+                      <h5 class="modal-title text-info" id="otpmodal">Please Enter OTP recieved <button type="button" class="close" (click)="otpForm1Shown = !otpForm1Shown"><span aria-hidden="true">&times;</span></button></h5>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <input type="text" class="form-control" placeholder="" name="otp" formControlName="otp" />
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onBussinessDetailsFormSubmit()">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+
+<app-chat [user]="user"></app-chat>
+
+</div>

@@ -1,0 +1,19 @@
+<div class="notifications">
+  <h1>Notifications</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngIf="false"><span class="check"><i class="fa" (click)="selectAll()" [ngClass]="{'fa-square-o':!allSelected, 'fa-check-square-o':allSelected}"></i></span></th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let note of notifications">
+          <td *ngIf="false"><span (click)="selectNote(note._id)" class="check"><i class="fa" [ngClass]="{'fa-square-o':!note.selected , 'fa-check-square-o':note.selected}"></i></span></td>
+          <td><span [innerHtml]="note"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,332 @@
+<div class="welcome" [ngClass]="{'popup': publishProvider || inviteUser || dashboardShow || userShow || registerShow || referShow}">
+  <div class="container">
+    <div class="balance"><img src="../../../../assets/img/ipu-icon.png" alt=""> Balance: {{user?.balance}}</div>
+    <div class="withdraw"><img src="../../../../assets/img/wallet.svg" alt=""></div>
+
+    <div class="notificationsIcon notificationsPop dropdown">
+      <i data-toggle="dropdown" class="fa fa-bell-o" aria-hidden="true" (click)="notificationsClick()"> <span *ngIf="user?.notifications && (user.notifications.length - user.lastSeenNotification > 0)" class="badge">{{user.notifications.length - user.lastSeenNotification}}</span></i>
+      <div class="dropdown-menu dropdown-menu-right" *ngIf="user?.notifications">
+        <div class="notification dropdown-item" *ngFor="let notification of notifications; let i = index">
+          <p clas="message"><!--{{i+1}} {{user.lastSeenNotification}}--><span *ngIf="(user.notifications.length - i) > user.lastSeenNotification" class="new">New</span> <span [innerHtml]="notification"></span></p>
+        </div>
+        <div class="notificationall dropdown-item" [routerLink]="['/notifications']">
+          <p>Notifications <a class="pull-right" [routerLink]="['/notifications']">View All</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="logout" (click)="logout()"><i class="fa fa-power-off"></i></div>
+
+    <div class="logo"><img src="../../../../assets/img/ipu-icon.png" alt=""></div>
+    <div *ngIf="false" class="profile">
+      <cl-image [public-id]="user.image" height="100" width="100" background="transparent">
+        <cl-transformation radius="max" crop="crop" background="transparent">
+        </cl-transformation>
+      </cl-image>
+    </div>
+    <h1>Welcome <span *ngIf="username">({{username}})</span></h1>
+    <p class="hidden-xs">We are Ipublishu.com where a user can come and register himself as Provider and as a User can also publish another User
+      (Provider) for his skillset.</p>
+    <div class="cards" *ngIf="!userTypeIsProvider">
+      <div class="card" (click)="publishProviderShow()" [ngClass]="{'active':publishProvider}">
+        <div *ngIf="!publishProvider"><img src="../../../assets/img/publish.png" alt="" /></div>
+        <div *ngIf="publishProvider"><img src="../../../assets/img/publish_active.png" alt="" /></div>
+        <span>Publish a Provider</span>
+      </div>
+      <div class="card" (click)="inviteUserShow()" [ngClass]="{'active':inviteUser}">
+        <img src="../../../assets/img/invite.png" alt="" *ngIf="!inviteUser" />
+        <img src="../../../assets/img/invite_active.png" alt="" *ngIf="inviteUser" /> <span>Invite</span>
+      </div>
+      <div class="card" (click)="navigateToDashboard()" [ngClass]="{'active':dashboardShow}">
+        <img src="../../../assets/img/dashboard.png" alt="" *ngIf="!dashboardShow" />
+        <img src="../../../assets/img/dashboard_active.png" alt="" *ngIf="dashboardShow" /> <span>My Dashboard</span>
+      </div>
+      <div class="card" (click)="navigateToProfile()" [ngClass]="{'active':userShow}">
+        <img src="../../../assets/img/profile.png" alt="" *ngIf="!userShow" />
+        <img src="../../../assets/img/profile_active.png" alt="" *ngIf="userShow" /> <span>My Profile</span>
+      </div>
+      <div class="card" (click)="registerProviderShow()" [ngClass]="{'active':registerShow}">
+        <img src="../../../assets/img/register.png" alt="" *ngIf="!registerShow" />
+        <img src="../../../assets/img/register_active.png" alt="" *ngIf="registerShow" /> <span>Register as Provider</span>
+      </div>
+    </div>
+
+    <div class="cards" *ngIf="userTypeIsProvider">
+      <div class="card" (click)="askForReferralShow()" [ngClass]="{'active':referShow}">
+        <img src="../../../assets/img/register.png" alt="" *ngIf="!referShow" />
+        <img src="../../../assets/img/register_active.png" alt="" *ngIf="referShow" /> <span>Ask for referral</span>
+      </div>
+      <div class="card" (click)="inviteUserShow()" [ngClass]="{'active':inviteUser}">
+        <img src="../../../assets/img/invite.png" alt="" *ngIf="!inviteUser" />
+        <img src="../../../assets/img/invite_active.png" alt="" *ngIf="inviteUser" /> <span>Invite</span>
+      </div>
+      <div class="card" (click)="publishProviderShow()" [ngClass]="{'active':publishProvider}">
+        <img src="../../../assets/img/publish.png" *ngIf="!publishProvider" alt="" />
+        <img src="../../../assets/img/publish_active.png" *ngIf="publishProvider" alt="" /> <span>Publish a Provider</span>
+      </div>
+      <div class="card" (click)="navigateToDashboard()" [ngClass]="{'active':dashboardShow}">
+        <img src="../../../assets/img/dashboard.png" alt="" *ngIf="!dashboardShow" />
+        <img src="../../../assets/img/dashboard_active.png" alt="" *ngIf="dashboardShow" /><span>My Dashboard</span>
+      </div>
+      <div class="card" (click)="navigateToProfile()" [ngClass]="{'active':userShow}">
+        <img src="../../../assets/img/profile.png" alt="" *ngIf="!userShow" />
+        <img src="../../../assets/img/profile_active.png" alt="" *ngIf="userShow" /> <span>My Profile</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="container">
+  <h4 *ngIf="false" class="publish-header text-center">Publish a Provider</h4>
+  <div class="row publishAProvider" *ngIf="publishProvider">
+    <div class="col-md-6">
+      <form [formGroup]="searchProvideForm">
+        <input type="search" name="search" formControlName="search" (input)="searchProvider()" placeholder="Phone/Email" />
+        <div class="col-md-12">
+          <div *ngIf="searchedUsers.length > 0" class="searchProviders">
+            <div class="drop-down" *ngFor="let user of searchedUsers">
+              <div class="top-strip">{{user.email}}</div>
+              <div class="divimg">
+                <cl-image class="image" [public-id]="user.image" height="70px" width="70px">
+                  <cl-transformation gravity="face" radius="max" crop="crop">
+                  </cl-transformation>
+                </cl-image>
+                <div>
+                  <label>{{user.name}}</label>
+                  <br/>
+                  <span>phone : {{user.phone}}</span>
+                  <button type="button" (click)="publishClick(user); publishUserPopUpShow(user)">Publish</button>
+                  <button type="button" [routerLink]="['/user/'+user._id]">Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="or"><span></span><span>or</span><span></span></div>
+          <div class="publishtoolbar">
+            <button type="button" class="btn btn-primary" (click)="navigateToPublishUser()">Search a Provider</button>
+            <button type="button" class="btn btn-primary" (click)="showInviteProvider()">Invite Provider</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <div class="recommended-user">
+        <h1>Recommended User</h1>
+        <div class="">
+          <div *ngFor="let ref of user?.publish_clicks" class="col-sm-4 col-xs-6" (click)="searchSelectedUser(ref)">
+            <div class="re-user">
+              <cl-image [public-id]="ref.target_img" class="image" height="40px" width="40px">
+                <cl-transformation gravity="face" radius="max" crop="crop">
+                </cl-transformation>
+              </cl-image>
+              <p>{{ref?.target_str}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="inviteUser" *ngIf="inviteUser">
+    <h1><span *ngIf="isMobile">Invite &#x2014;</span> Reference</h1>
+    <form [formGroup]="inviteForm" (ngSubmit)="onInviteUserFormSubmit()">
+      <div class="form-group" [ngClass]="{'has-danger': inviteForm.controls['reference'].hasError('required') && inviteForm.controls['reference'].touched}">
+        <textarea class="form-control" id="inviteMessage" placeholder="Please enter your reference message here ..." name="reference"
+          formControlName="reference" #invite (input)="inviteUserWhatsappShare(invite.value)"></textarea>
+        <div class="btn-toolbar">
+          <button class="btn btn-primary" ngxClipboard [cbContent]="invite.value" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>Copy</button>
+          <a class="btn btn-primary" target="_blank" [href]="inviteWhastApp"><i class="fa fa-share-alt" aria-hidden="true"></i> Share via WhatsApp </a>
+        </div>
+      </div>
+      <p class="clearfix"></p>
+      <div class="role">
+        <p><b>Invite as:</b>
+          <label><input type="radio" name="type" value="User" formControlName="type" (change)="changeUserType()" /> User</label>
+          <label><input type="radio" name="type" value="Provider" formControlName="type" (change)="changeUserType()" /> Provider</label>
+        </p>
+      </div>
+      <p class="clearfix"></p>
+      <div class="send-via"><span><b>Send Via</b></span>
+        <label [ngClass]="{'active':inviteForm.controls['destinationType'].value == 'SMS'}">
+          <img src="../../../assets/img/message.png" alt="User" />
+          <input type="radio" name="destinationType" formControlName="destinationType" value="SMS" />
+        </label>
+        <label *ngIf="false" [ngClass]="{'active':inviteForm.controls['destinationType'].value == 'WHATSUP'}">
+          <img src="../../../assets/img/whatsapp.png" alt="User" />
+          <input type="radio" name="destinationType" formControlName="destinationType" value="WHATSUP" />
+        </label>
+        <label [ngClass]="{'active':inviteForm.controls['destinationType'].value == 'EMAIL'}">
+          <img src="../../../assets/img/email.png" alt="User" />
+          <input type="radio" name="destinationType" formControlName="destinationType" value="EMAIL" />
+        </label>
+      </div>
+      <p class="clearfix"></p>
+      <div class="form-group" [ngClass]="{'has-danger': inviteForm.controls['email']?.errors && inviteForm.controls['email'].dirty && inviteForm.controls['email'].touched}"
+        *ngIf="inviteForm.controls['destinationType'].value == 'EMAIL'">
+        <h1>Email</h1>
+        <input type="email" class="form-control" placeholder="Please enter your email ..." name="email" formControlName="email" />
+        <p class="text-danger" *ngIf="inviteForm.controls['email']?.errors && inviteForm.controls['email'].dirty && inviteForm.controls['email'].touched">Please Enter a valid Email id.</p>
+      </div>
+      <div class="form-group" *ngIf="inviteForm.controls['destinationType'].value != 'EMAIL'" [ngClass]="{'has-danger': inviteForm.controls['phone']?.errors && inviteForm.controls['phone'].dirty && inviteForm.controls['phone'].touched}">
+        <h1>Phone</h1>
+        <input type="text" class="form-control" placeholder="Please enter your phone ..." name="phone" formControlName="phone" />
+        <p class="text-danger" *ngIf="inviteForm.controls['phone']?.errors && inviteForm.controls['phone'].dirty && inviteForm.controls['phone'].touched">Please Enter a valid Phone number.</p>
+      </div>
+      <div class="btn-toolbar">
+        <button type="submit" class="btn btn-primary" [disabled]="(inviteForm.controls['destinationType'].value == 'EMAIL' && inviteForm.controls['email'].invalid) || (inviteForm.controls['destinationType'].value != 'EMAIL' && (inviteForm.controls['phone'].pristine || inviteForm.controls['phone'].invalid))">Send</button>
+      </div>
+      <p class="clearfix"></p>
+    </form>
+  </div>
+
+  <div class="referral" *ngIf="referShow">
+    <h1><span *ngIf="isMobile">Ask for Referral &#x2014;</span> Reference</h1>
+    <form [formGroup]="referForm" (ngSubmit)="onReferUserFormSubmit()">
+      <div class="form-group" [ngClass]="{'has-danger': referForm.controls['reference'].hasError('required') && referForm.controls['reference'].touched}">
+        <textarea class="form-control" id="inviteMessage" placeholder="Please enter your reference message here ..." name="reference"
+          formControlName="reference" #invite (input)="referUserWhatsappShare(invite.value)"></textarea>
+        <div class="btn-toolbar">
+          <button class="btn btn-primary" ngxClipboard [cbContent]="invite.value" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>Copy</button>
+          <a class="btn btn-primary" target="_blank" [href]="referWhastApp"><i class="fa fa-share-alt" aria-hidden="true"></i> Share via WhatsApp </a>
+        </div>
+      </div>
+      <p class="clearfix"></p>
+      <div class="send-via"><span><b>Send Via</b></span>
+        <label [ngClass]="{'active':referForm.controls['destinationType'].value == 'SMS'}">
+          <img src="../../../assets/img/message.png" alt="User" />
+          <input type="radio" name="destinationType" formControlName="destinationType" value="SMS" />
+        </label>
+        <label *ngIf="false" [ngClass]="{'active':referForm.controls['destinationType'].value == 'WHATSUP'}">
+          <img src="../../../assets/img/whatsapp.png" alt="User" />
+          <input type="radio" name="destinationType" formControlName="destinationType" value="WHATSUP" />
+        </label>
+        <label [ngClass]="{'active':referForm.controls['destinationType'].value == 'EMAIL'}">
+          <img src="../../../assets/img/email.png" alt="User" />
+          <input type="radio" name="destinationType" formControlName="destinationType" value="EMAIL" />
+        </label>
+      </div>
+      <p class="clearfix"></p>
+      <div class="form-group" [ngClass]="{'has-danger': referForm.controls['email']?.errors && referForm.controls['email'].dirty && referForm.controls['email'].touched}"
+        *ngIf="referForm.controls['destinationType'].value == 'EMAIL'">
+        <h1>Email</h1>
+        <input type="email" class="form-control" placeholder="Please enter your email ..." name="email" formControlName="email" />
+        <p class="text-danger" *ngIf="referForm.controls['email']?.errors && referForm.controls['email'].dirty && referForm.controls['email'].touched">Please Enter a valid Email id.</p>
+      </div>
+      <div class="form-group" *ngIf="referForm.controls['destinationType'].value != 'EMAIL'" [ngClass]="{'has-danger': referForm.controls['phone']?.errors && referForm.controls['phone'].dirty && referForm.controls['phone'].touched}">
+        <h1>Phone</h1>
+        <input type="text" class="form-control" placeholder="Please enter your phone ..." name="phone" formControlName="phone" />
+        <p class="text-danger" *ngIf="referForm.controls['phone']?.errors && referForm.controls['phone'].dirty && referForm.controls['phone'].touched">Please Enter a valid Phone number.</p>
+      </div>
+      <div class="btn-toolbar">
+        <button type="submit" class="btn btn-primary" [disabled]="(referForm.controls['destinationType'].value == 'EMAIL' && referForm.controls['email'].invalid) || (referForm.controls['destinationType'].value != 'EMAIL' && (referForm.controls['phone'].pristine || referForm.controls['phone'].invalid))">Send</button>
+      </div>
+      <p class="clearfix"></p>
+    </form>
+  </div>
+</div>
+
+<div class="publisher-detail" *ngIf="detailUserPopUpShown && selectedUser">
+  <h3>Details <span (click)="detailUserPopUpHide()" class="pull-right"><i class="fa fa-close"></i></span></h3>
+  <figure class="text-center">
+    <cl-image [public-id]="selectedUser.image" height="100" width="100" background="#ffffff">
+      <cl-transformation radius="max" crop="crop" background="#ffffff">
+      </cl-transformation>
+    </cl-image>
+    <caption>{{selectedUser.name}} {{selectedUser.lastname}}</caption>
+  </figure>
+  <div class="clr"></div>
+  <div class="col-md-4">
+    <div class="black-tab"><span><b>{{selectedUser?.stats?.payments}}</b> <br/>Services</span></div>
+  </div>
+  <div class="col-md-4">
+    <div class="black-tab"><span><b>{{selectedUser?.stats?.reviews}}</b> <br/>Reviews</span></div>
+  </div>
+  <div class="col-md-4">
+    <div class="black-tab"><span><b>{{selectedUser?.stats?.avg_score}}</b> <br/>Avg. score</span></div>
+  </div>
+  <table>
+    <tr>
+      <td>Email</td>
+      <td>:</td>
+      <td>{{selectedUser.email}}</td>
+    </tr>
+    <tr>
+      <td>Phone</td>
+      <td>:</td>
+      <td>{{selectedUser.phone}}</td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td>:</td>
+      <td>{{selectedUser.address}}</td>
+    </tr>
+    <tr>
+      <td>Profession</td>
+      <td>:</td>
+      <td>{{selectedUser.providing?.profession}}</td>
+    </tr>
+    <tr>
+      <td>Category</td>
+      <td>:</td>
+      <td>{{selectedUser.providing?.category}}</td>
+    </tr>
+    <tr>
+      <td>Website</td>
+      <td>:</td>
+      <td>{{selectedUser.providing?.website}}</td>
+    </tr>
+  </table>
+  <button [routerLink]="['/user/'+selectedUser._id]" class="btn btn-primary">Click To Get More Details</button>
+</div>
+
+<div class="transparent-bg" *ngIf="publishUserPopUpShown || detailUserPopUpShown"></div>
+<div class="inviteProviderPopUp" *ngIf="publishUserPopUpShown">
+  <h1>Publish User <span (click)="publishUserPopUpHide()" class="pull-right"><i class="fa fa-close"></i></span></h1>
+  <div class="wrap">
+    <form [formGroup]="publishForm" (ngSubmit)="onPublishUserFormSubmit()">
+      <label>Reference</label>
+      <div class="form-group" [ngClass]="{'has-danger': publishForm.controls['reference'].hasError('required') && publishForm.controls['reference'].touched}">
+        <textarea class="form-control" id="inviteMessage" placeholder="Please enter your reference message here ..." name="reference"
+          formControlName="reference" #invite (input)="publishUserWhatsappShare(invite.value)"></textarea>
+        <div class="btn-toolbar">
+          <button class="btn btn-primary" ngxClipboard [cbContent]="invite.value" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>Copy</button>
+          <a class="btn btn-primary" target="_blank" [href]="publishWhastApp"><i class="fa fa-share-alt" aria-hidden="true"></i> Share via WhatsApp </a>
+        </div>
+      </div>
+      <p class="clearfix"></p>
+      <div class="send-via"><span><b>Send Via</b></span>
+        <label [ngClass]="{'active':publishForm.controls['destinationType'].value == 'SMS'}">
+            <img src="../../../../assets/img/message.png" alt="User" />
+            <input type="radio" name="destinationType" formControlName="destinationType" value="SMS" />
+        </label>
+        <label *ngIf="false" [ngClass]="{'active':publishForm.controls['destinationType'].value == 'WHATSUP'}">
+            <img src="../../../../assets/img/whatsapp.png" alt="User" />
+            <input type="radio" name="destinationType" formControlName="destinationType" value="WHATSUP" />
+        </label>
+        <label [ngClass]="{'active':publishForm.controls['destinationType'].value == 'EMAIL'}">
+            <img src="../../../../assets/img/email.png" alt="User" />
+            <input type="radio" name="destinationType" formControlName="destinationType" value="EMAIL" />
+        </label>
+      </div>
+      <p class="clearfix"></p>
+      <div class="form-group" [ngClass]="{'has-danger': publishForm.controls['email']?.errors && publishForm.controls['email'].dirty && publishForm.controls['email'].touched}"
+        *ngIf="publishForm.controls['destinationType'].value == 'EMAIL'">
+        <label>Email</label>
+        <input type="email" class="form-control" placeholder="Please enter your email ..." name="email" formControlName="email" />
+        <p class="text-danger" *ngIf="publishForm.controls['email']?.errors && publishForm.controls['email'].dirty && publishForm.controls['email'].touched">Please Enter a valid Email id.</p>
+      </div>
+      <div class="form-group" *ngIf="publishForm.controls['destinationType'].value != 'EMAIL'" [ngClass]="{'has-danger': publishForm.controls['phone']?.errors && publishForm.controls['phone'].dirty && publishForm.controls['phone'].touched}">
+        <label>Phone</label>
+        <input type="text" class="form-control" placeholder="Please enter your phone ..." name="phone" formControlName="phone" />
+        <p class="text-danger" *ngIf="publishForm.controls['phone']?.errors && publishForm.controls['phone'].dirty && publishForm.controls['phone'].touched">Please Enter a valid Phone number.</p>
+      </div>
+      <div class="btn-toolbar">
+        <button type="submit" class="btn btn-primary" [disabled]="(publishForm.controls['destinationType'].value == 'EMAIL' && publishForm.controls['email'].invalid) || (publishForm.controls['destinationType'].value != 'EMAIL' && (publishForm.controls['phone'].pristine || publishForm.controls['phone'].invalid))">Send</button>
+      </div>
+      <p class="clearfix"></p>
+    </form>
+  </div>
+</div>
+<app-chat [user]="user"></app-chat>
+

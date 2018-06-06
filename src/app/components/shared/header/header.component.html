@@ -1,0 +1,28 @@
+<nav class="ipu-sidebar" [ngClass]="{'mobileHeader':isMobile}">
+  <h3 *ngIf="isOpened"><img src="../../../../assets/img/ipu-icon.png" alt=""></h3>
+  <span class="navbar-toggler" (click)="togglenavBarOnClick()"><i class="fa fa-bars"></i></span>
+  <!--<i class="fa" [ngClass]="{'fa-chevron-down':toggleheader, 'fa-chevron-up':!toggleheader}" *ngIf="isMobile" (click)="toggleHeaderBarOnClick()"></i>-->
+  <ul class="pull-right" [ngClass]="{'toggleheader':toggleheader}">
+      <li class="balance"><b>Balance: {{user.balance}}</b></li>
+      <!--<li class="widthdraw"><img src="../../../../assets/img/withdraw.png" alt="User" /></li>-->
+      <li class="widthdraw"><img src="../../../../assets/img/wallet1.svg" alt=""></li>
+      <li class="notificationsPop dropdown" (click)="notificationsClick()"><i data-toggle="dropdown" class="fa fa-bell-o" aria-hidden="true"> <span *ngIf="(notifications.length - user.lastSeenNotification) > 0" class="badge">{{notifications.length - user.lastSeenNotification}}</span></i>
+          <div class="dropdown-menu dropdown-menu-right">
+              <div class="notification dropdown-item" *ngFor="let notification of notifications; let i = index">
+                  <p clas="message"><span *ngIf="(notifications.length - i) > user.lastSeenNotification" class="new">New</span> <span [innerHtml]="notification"></span></p>
+              </div>
+              <div class="notificationall dropdown-item" [routerLink]="['/notifications']">
+                  <p>Notifications <a class="pull-right" [routerLink]="['/notifications']">View All</a></p>
+              </div>
+          </div>
+      </li>
+      <li class="avatar">
+          <cl-image [public-id]="user.image" height="40" width="40" background="#3c8cbc">
+              <cl-transformation radius="max" crop="crop" background="#3c8cbc">
+              </cl-transformation>
+          </cl-image>
+      </li>
+      <li class="username"><b>{{user.name}} {{user.lastname}}</b></li>
+      <li class="logout" (click)="logout()"><i class="fa fa-power-off"></i></li>
+  </ul>
+</nav>
